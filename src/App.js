@@ -70,8 +70,34 @@ class App extends Component {
     this.classes = props.classes;
   }
   handleChangeDifficulty = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    let columns, difficulty, mines, rows;
+    switch (event.target.value) {
+      case 1:
+      default:
+        // Easy
+        difficulty = 1;
+        columns = 9;
+        rows = 9;
+        mines = 10;
+        break;
+      case 2:
+        // Medium
+        difficulty = 2;
+        columns = 16;
+        rows = 16;
+        mines = 40;
+        break;
+      case 3:
+        // Hard
+        difficulty = 3;
+        columns = 16;
+        rows = 30;
+        mines = 99;
+        break;
+    }
+    this.setState({ columns, difficulty, mines, rows });
   };
+
   render() {
     return (
       <MuiThemeProvider theme={theme}>
