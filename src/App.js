@@ -13,6 +13,7 @@ import Badge from '@material-ui/core/Badge';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { createMuiTheme } from '@material-ui/core/styles';
 
+// define theme colours
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -30,6 +31,7 @@ const theme = createMuiTheme({
   }
 });
 
+// override theme styling
 const styles = theme => ({
   margin: {
     margin: theme.spacing.unit * 2
@@ -38,6 +40,10 @@ const styles = theme => ({
     padding: `0 ${theme.spacing.unit * 2}px`
   }
 });
+
+const styleToolbarCentre = {
+  margin: 'auto'
+};
 
 const Grid = props => {
   let grid = [];
@@ -52,23 +58,17 @@ const Grid = props => {
   return grid;
 };
 
-class Timer extends Component {
-  constructor(props) {
-    super(props);
-    this.classes = props.classes;
-  }
-  render() {
-    return (
-      <Typography
-        className={this.classes.margin}
-        variant="headline"
-        color="inherit"
-      >
-        {this.props.time ? this.props.time : '0:00'}
-      </Typography>
-    );
-  }
-}
+const Timer = props => {
+  return (
+    <Typography
+      className={props.classes.margin}
+      variant="headline"
+      color="inherit"
+    >
+      {props.time ? props.time : '0:00'}
+    </Typography>
+  );
+};
 
 class App extends Component {
   constructor(props) {
@@ -78,6 +78,7 @@ class App extends Component {
       difficulty: 1,
       grid: new Array(9 * 9).fill(0),
       mines: 10,
+      minesToBeFound: 10,
       rows: 9,
       time: null
     };
@@ -87,6 +88,7 @@ class App extends Component {
     // This binding is necessary to make `this` work in the callback
     this.startGame = this.startGame.bind(this);
   }
+
   handleChangeDifficulty = event => {
     let columns, difficulty, mines, rows;
     switch (event.target.value) {
@@ -116,7 +118,7 @@ class App extends Component {
     this.setState({ columns, difficulty, mines, rows });
   };
 
-  getTime = () => {
+  getElapsedTime = () => {
     let timeDiff = new Date().getTime() - this.startTime;
     let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
     let seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
@@ -128,12 +130,9 @@ class App extends Component {
     if (this.timerId !== 0) {
       clearInterval(this.timerId);
     }
-    this.timerId = setInterval(
-      (() => {
-        this.setState({ time: this.getTime() });
-      }).bind(this),
-      1000
-    );
+    this.timerId = setInterval(() => {
+      this.setState({ time: this.getElapsedTime() });
+    }, 1000);
   };
 
   render() {
@@ -142,7 +141,7 @@ class App extends Component {
         <CssBaseline />
         <div className="App">
           <AppBar position="static">
-            <Toolbar>
+            <Toolbar disableGutters={true} style={styleToolbarCentre}>
               <Select
                 className={this.classes.margin}
                 color=""
@@ -172,7 +171,7 @@ class App extends Component {
               >
                 <Badge
                   className={this.classes.padding}
-                  badgeContent={4}
+                  badgeContent={this.state.minesToBeFound}
                   color="secondary"
                 >
                   Mines
