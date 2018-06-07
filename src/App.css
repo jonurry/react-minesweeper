@@ -1,3 +1,21 @@
 .App {
   text-align: center;
 }
+
+.grid {
+  width: 90vmin;
+  height: 90vmin;
+  margin: 2vmin auto;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-gap: 1vmin;
+  justify-items: center;
+  align-items: center;
+}
+
+.grid button {
+  min-height: 8vmin;
+  min-width: 8vmin;
+  height: auto;
+  width: auto;
+}

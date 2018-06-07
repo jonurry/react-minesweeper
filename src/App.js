@@ -38,11 +38,34 @@ const styles = theme => ({
     padding: `0 ${theme.spacing.unit * 2}px`
   }
 });
+
+class Grid extends Component {
+  renderGrid() {
+    let grid = [];
+    let key = 0;
+    for (let item of this.props.grid) {
+      grid.push(
+        <Button key={key++} variant="contained" color="secondary">
+          {item}
+        </Button>
+      );
+    }
+    return grid;
+  }
+  render() {
+    return this.renderGrid();
+  }
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      difficulty: 1
+      columns: 9,
+      difficulty: 1,
+      grid: new Array(9 * 9).fill(0),
+      mines: 10,
+      rows: 9
     };
     this.classes = props.classes;
   }
@@ -88,13 +111,16 @@ class App extends Component {
               </Typography>
               <Typography
                 className={this.classes.margin}
-                variant="subheading"
+                variant="headline"
                 color="inherit"
               >
                 00:43
               </Typography>
             </Toolbar>
           </AppBar>
+          <div className="grid">
+            <Grid grid={this.state.grid} />
+          </div>
         </div>
       </MuiThemeProvider>
     );
