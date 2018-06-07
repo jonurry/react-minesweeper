@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-.grid {
+.minefield {
   width: 90vmin;
   height: 90vmin;
   margin: 2vmin auto;
@@ -13,7 +13,7 @@
   align-items: center;
 }
 
-.grid button {
+.minefield button {
   min-height: 8vmin;
   min-width: 8vmin;
   height: auto;

@@ -46,16 +46,16 @@ const styleToolbarCentre = {
 };
 
 const Grid = props => {
-  let grid = [];
+  let minefield = [];
   let key = 0;
-  for (let item of props.grid) {
-    grid.push(
+  for (let item of props.minefield) {
+    minefield.push(
       <Button key={key++} variant="contained" color="secondary">
         {item}
       </Button>
     );
   }
-  return grid;
+  return minefield;
 };
 
 const Timer = props => {
@@ -76,7 +76,7 @@ class App extends Component {
     this.state = {
       columns: 9,
       difficulty: 1,
-      grid: new Array(9 * 9).fill(0),
+      minefield: [],
       mines: 10,
       minesToBeFound: 10,
       rows: 9,
@@ -89,8 +89,26 @@ class App extends Component {
     this.startGame = this.startGame.bind(this);
   }
 
+  componentDidMount() {
+    this.initialiseMinefield();
+  }
+
+  componentWillUnmount() {
+    this.cancelTimer();
+  }
+
+  cancelTimer() {
+    if (this.timerId !== 0) {
+      clearInterval(this.timerId);
+      this.startTime = null;
+      this.timerId = 0;
+      this.setState({ time: null });
+    }
+  }
+
   handleChangeDifficulty = event => {
     let columns, difficulty, mines, rows;
+    this.cancelTimer();
     switch (event.target.value) {
       case 1:
       default:
@@ -115,7 +133,8 @@ class App extends Component {
         mines = 99;
         break;
     }
-    this.setState({ columns, difficulty, mines, rows });
+    this.setState({ columns, difficulty, mines, minesToBeFound: mines, rows });
+    this.initialiseMinefield();
   };
 
   getElapsedTime = () => {
@@ -125,11 +144,15 @@ class App extends Component {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  initialiseMinefield = () => {
+    this.setState((state, props) => ({
+      minefield: new Array(state.rows * state.columns).fill(0)
+    }));
+  };
+
   startGame = () => {
+    this.cancelTimer();
     this.startTime = new Date().getTime();
-    if (this.timerId !== 0) {
-      clearInterval(this.timerId);
-    }
     this.timerId = setInterval(() => {
       this.setState({ time: this.getElapsedTime() });
     }, 1000);
@@ -180,8 +203,8 @@ class App extends Component {
               <Timer time={this.state.time} classes={this.classes} />
             </Toolbar>
           </AppBar>
-          <div className="grid">
-            <Grid grid={this.state.grid} />
+          <div className="minefield">
+            <Grid minefield={this.state.minefield} />
           </div>
         </div>
       </MuiThemeProvider>
