@@ -45,15 +45,11 @@ const styleToolbarCentre = {
   margin: 'auto'
 };
 
-const Grid = props => {
+const Minefield = props => {
   let minefield = [];
   let key = 0;
   for (let item of props.minefield) {
-    minefield.push(
-      <Button key={key++} variant="contained" color="secondary">
-        {item}
-      </Button>
-    );
+    minefield.push(<div key={key++}>{item}</div>);
   }
   return minefield;
 };
@@ -74,65 +70,109 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      columns: 9,
-      difficulty: 1,
+      difficulty: 'easy',
       minefield: [],
       mines: 10,
       minesToBeFound: 10,
-      rows: 9,
       time: null
     };
     this.classes = props.classes;
     this.startTime = null;
     this.timerId = 0;
-    // This binding is necessary to make `this` work in the callback
-    this.startGame = this.startGame.bind(this);
+    this.columnRef = React.createRef();
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
+    // set the size of the minefield
+    let columns, rows;
+    ({ columns, rows } = this.getMinefieldDimensions(this.state.difficulty));
+    this.setState({ columns, rows });
+    this.setColumnsInCSSGrid(columns);
     this.initialiseMinefield();
-  }
+  };
 
-  componentWillUnmount() {
+  componentWillUnmount = () => {
     this.cancelTimer();
-  }
+  };
 
-  cancelTimer() {
+  cancelTimer = () => {
     if (this.timerId !== 0) {
       clearInterval(this.timerId);
       this.startTime = null;
       this.timerId = 0;
       this.setState({ time: null });
     }
-  }
+  };
+
+  getNumberOfColumnsForMinefield = width => {
+    // return the optimum number for columns for the screen width
+    if (width <= 320) {
+      return 6;
+    }
+    if (width <= 480) {
+      return 8;
+    }
+    if (width <= 768) {
+      return 12;
+    }
+    if (width <= 1024) {
+      return 18;
+    }
+    return 24;
+  };
+
+  getNumberOfRowsForMinefield = (columns, difficulty) => {
+    // there are 3 difficulty levels
+    // each has a given number of total grid squares
+    // from that, the number of rows can be derived
+    switch (difficulty) {
+      default:
+      case 'easy':
+        return 72 / columns;
+        break;
+      case 'medium':
+        return 288 / columns;
+        break;
+      case 'hard':
+        return 504 / columns;
+        break;
+    }
+  };
+
+  getMinefieldDimensions = difficulty => {
+    // get the screen width
+    const width = window.innerWidth;
+    // work out the optimum number for columns for the screen width
+    const columns = this.getNumberOfColumnsForMinefield(width);
+    // work out the number of rows required for the chosen difficulty
+    const rows = this.getNumberOfRowsForMinefield(columns, difficulty);
+    return { columns, rows };
+  };
+
+  setColumnsInCSSGrid = columns => {
+    document.documentElement.style.setProperty('--columns', columns);
+  };
 
   handleChangeDifficulty = event => {
     let columns, difficulty, mines, rows;
     this.cancelTimer();
     switch (event.target.value) {
-      case 1:
       default:
-        // Easy
-        difficulty = 1;
-        columns = 9;
-        rows = 9;
+      case 'easy':
+        difficulty = 'easy';
         mines = 10;
         break;
-      case 2:
-        // Medium
-        difficulty = 2;
-        columns = 16;
-        rows = 16;
+      case 'medium':
+        difficulty = 'medium';
         mines = 40;
         break;
-      case 3:
-        // Hard
-        difficulty = 3;
-        columns = 16;
-        rows = 30;
-        mines = 99;
+      case 'hard':
+        difficulty = 'hard';
+        mines = 100;
         break;
     }
+    ({ columns, rows } = this.getMinefieldDimensions(difficulty));
+    this.setColumnsInCSSGrid(columns);
     this.setState({ columns, difficulty, mines, minesToBeFound: mines, rows });
     this.initialiseMinefield();
   };
@@ -175,9 +215,9 @@ class App extends Component {
                   id: 'select-difficulty'
                 }}
               >
-                <MenuItem value={1}>Easy</MenuItem>
-                <MenuItem value={2}>Medium</MenuItem>
-                <MenuItem value={3}>Hard</MenuItem>
+                <MenuItem value={'easy'}>Easy</MenuItem>
+                <MenuItem value={'medium'}>Medium</MenuItem>
+                <MenuItem value={'hard'}>Hard</MenuItem>
               </Select>
               <Button
                 variant="fab"
@@ -203,8 +243,11 @@ class App extends Component {
               <Timer time={this.state.time} classes={this.classes} />
             </Toolbar>
           </AppBar>
-          <div className="minefield">
-            <Grid minefield={this.state.minefield} />
+          <div
+            className={`minefield ${this.state.difficulty}`}
+            ref={this.columnRef}
+          >
+            <Minefield minefield={this.state.minefield} />
           </div>
         </div>
       </MuiThemeProvider>
