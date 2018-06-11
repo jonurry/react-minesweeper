@@ -79,7 +79,7 @@ class App extends Component {
     this.classes = props.classes;
     this.startTime = null;
     this.timerId = 0;
-    this.columnRef = React.createRef();
+    this.minefieldRef = React.createRef();
   }
 
   componentDidMount = () => {
@@ -106,9 +106,6 @@ class App extends Component {
 
   getNumberOfColumnsForMinefield = width => {
     // return the optimum number for columns for the screen width
-    if (width <= 320) {
-      return 6;
-    }
     if (width <= 480) {
       return 8;
     }
@@ -129,28 +126,51 @@ class App extends Component {
       default:
       case 'easy':
         return 72 / columns;
-        break;
       case 'medium':
         return 288 / columns;
-        break;
       case 'hard':
         return 504 / columns;
-        break;
     }
   };
 
   getMinefieldDimensions = difficulty => {
     // get the screen width
     const width = window.innerWidth;
+    let columns = 8; // default to 8 columns in easy mode
     // work out the optimum number for columns for the screen width
-    const columns = this.getNumberOfColumnsForMinefield(width);
+    if (difficulty !== 'easy') {
+      columns = this.getNumberOfColumnsForMinefield(width);
+    }
     // work out the number of rows required for the chosen difficulty
     const rows = this.getNumberOfRowsForMinefield(columns, difficulty);
     return { columns, rows };
   };
 
   setColumnsInCSSGrid = columns => {
+    // available screen height - toolbar height
+    const height = window.innerHeight - 64;
+    // available screen width
+    const width = window.innerWidth;
+    const fontRatio = height > width ? 0.75 : 0.8;
+    let fontSize;
+    let contentWidth;
+    let gutter;
+    let minefieldElement = document.getElementsByClassName('minefield')[0];
+    if (columns === 8) {
+      // easy mode with 8 columns so limit width so that whole minefield is visible on screen
+      contentWidth = height > width ? 'calc(96vmin)' : 'calc(80vmin - 64px)';
+      // font size proportional to row height
+      fontSize = `calc(var(--content-width) / var(--columns) * ${fontRatio})`;
+      gutter = '1vh';
+    } else {
+      contentWidth = '96vw';
+      fontSize = `calc(var(--content-width) / var(--columns) * ${fontRatio})`;
+      gutter = '1vw';
+    }
     document.documentElement.style.setProperty('--columns', columns);
+    minefieldElement.style.setProperty('--content-width', contentWidth);
+    minefieldElement.style.setProperty('--gutter', gutter);
+    minefieldElement.style.fontSize = fontSize;
   };
 
   handleChangeDifficulty = event => {
@@ -245,7 +265,7 @@ class App extends Component {
           </AppBar>
           <div
             className={`minefield ${this.state.difficulty}`}
-            ref={this.columnRef}
+            ref={this.minefieldRef}
           >
             <Minefield minefield={this.state.minefield} />
           </div>

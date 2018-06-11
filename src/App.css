@@ -3,7 +3,15 @@
 
 /* Define a variable at the top level of the cascade so that it is easily accessible to react */
 :root {
-  --columns: 6; }
+  --primary-light: #9be7ff;
+  --primary-main: #64b5f6;
+  --primary-dark: #2286c3;
+  --primary-contrast-text: #263238;
+  --secondary-light: #ffe97d;
+  --secondary-main: #ffb74d;
+  --secondary-dark: #c88719;
+  --secondary-contrast-text: #263238;
+  --columns: 8; }
 
 .minefield {
   --content-width: 96vw;
@@ -14,7 +22,7 @@
   );
   display: grid;
   width: 100%;
-  margin: 2vw;
+  margin: 2vw auto;
   max-width: var(--content-width);
   grid-template-columns: repeat(var(--columns), 1fr);
   grid-auto-rows: var(--row-size);
@@ -23,3 +31,8 @@
   justify-items: center;
   align-items: center;
   font-size: calc(70vw / var(--columns)); }
+  .minefield > div {
+    align-self: stretch;
+    background: var(--secondary-light);
+    border-radius: 50%;
+    justify-self: stretch; }

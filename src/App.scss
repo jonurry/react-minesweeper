@@ -4,8 +4,17 @@
 
 /* Define a variable at the top level of the cascade so that it is easily accessible to react */
 :root {
+  // colour palette
+  --primary-light: #9be7ff;
+  --primary-main: #64b5f6;
+  --primary-dark: #2286c3;
+  --primary-contrast-text: #263238;
+  --secondary-light: #ffe97d;
+  --secondary-main: #ffb74d;
+  --secondary-dark: #c88719;
+  --secondary-contrast-text: #263238;
   // default to 6 columns. This will be changed by react on demand.
-  --columns: 6;
+  --columns: 8;
 }
 
 .minefield {
@@ -24,7 +33,7 @@
   display: grid;
 
   width: 100%;
-  margin: 2vw;
+  margin: 2vw auto;
   max-width: var(--content-width);
 
   grid-template-columns: repeat(var(--columns), 1fr);
@@ -37,4 +46,11 @@
   align-items: center;
 
   font-size: calc(70vw / var(--columns));
+
+  > div {
+    align-self: stretch;
+    background: var(--secondary-light);
+    border-radius: 50%;
+    justify-self: stretch;
+  }
 }
