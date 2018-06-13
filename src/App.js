@@ -50,7 +50,7 @@ const Minefield = props => {
   let minefield = [];
   let key = 0;
   for (let item of props.minefield) {
-    minefield.push(<div key={key++}>{item}</div>);
+    minefield.push(<div key={key++}>{item.value}</div>);
   }
   return minefield;
 };
@@ -72,13 +72,12 @@ class App extends Component {
     super(props);
     this.state = {
       difficulty: 'easy',
-      minefield: [],
+      minefield: new Model(),
       mines: 10,
       minesToBeFound: 10,
       time: null
     };
     this.classes = props.classes;
-    this.model = new Model();
     this.startTime = null;
     this.timerId = 0;
     this.minefieldRef = React.createRef();
@@ -209,7 +208,7 @@ class App extends Component {
 
   initialiseMinefield = () => {
     this.setState((state, props) => ({
-      minefield: new Array(state.rows * state.columns).fill('?')
+      minefield: new Model(state.columns, state.rows, state.mines)
     }));
   };
 

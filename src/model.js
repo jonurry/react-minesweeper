@@ -15,4 +15,11 @@ class Model {
   }
 }
 
+// iterate over Model using a generator
+Model.prototype[Symbol.iterator] = function*() {
+  for (let item of this.minefield) {
+    yield item;
+  }
+};
+
 export default Model;
