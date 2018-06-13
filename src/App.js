@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import Badge from '@material-ui/core/Badge';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { createMuiTheme } from '@material-ui/core/styles';
+import Model from './model.js';
 
 // define theme colours
 const theme = createMuiTheme({
@@ -77,6 +78,7 @@ class App extends Component {
       time: null
     };
     this.classes = props.classes;
+    this.model = new Model();
     this.startTime = null;
     this.timerId = 0;
     this.minefieldRef = React.createRef();
@@ -152,25 +154,26 @@ class App extends Component {
     // available screen width
     const width = window.innerWidth;
     const fontRatio = height > width ? 0.75 : 0.8;
-    let fontSize;
+    const fontSize = `calc(var(--content-width) / var(--columns) * ${fontRatio})`;
     let contentWidth;
     let gutter;
-    let minefieldElement = document.getElementsByClassName('minefield')[0];
     if (columns === 8) {
       // easy mode with 8 columns so limit width so that whole minefield is visible on screen
       contentWidth = height > width ? 'calc(96vmin)' : 'calc(80vmin - 64px)';
       // font size proportional to row height
-      fontSize = `calc(var(--content-width) / var(--columns) * ${fontRatio})`;
       gutter = '1vh';
     } else {
       contentWidth = '96vw';
-      fontSize = `calc(var(--content-width) / var(--columns) * ${fontRatio})`;
       gutter = '1vw';
     }
-    document.documentElement.style.setProperty('--columns', columns);
-    minefieldElement.style.setProperty('--content-width', contentWidth);
-    minefieldElement.style.setProperty('--gutter', gutter);
-    minefieldElement.style.fontSize = fontSize;
+    this.setState({
+      minefieldStyle: {
+        ['--columns']: columns,
+        ['--content-width']: contentWidth,
+        ['--gutter']: gutter,
+        fontSize: fontSize
+      }
+    });
   };
 
   handleChangeDifficulty = event => {
@@ -206,7 +209,7 @@ class App extends Component {
 
   initialiseMinefield = () => {
     this.setState((state, props) => ({
-      minefield: new Array(state.rows * state.columns).fill(0)
+      minefield: new Array(state.rows * state.columns).fill('?')
     }));
   };
 
@@ -266,6 +269,7 @@ class App extends Component {
           <div
             className={`minefield ${this.state.difficulty}`}
             ref={this.minefieldRef}
+            style={this.state.minefieldStyle}
           >
             <Minefield minefield={this.state.minefield} />
           </div>

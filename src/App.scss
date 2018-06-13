@@ -13,17 +13,15 @@
   --secondary-main: #ffb74d;
   --secondary-dark: #c88719;
   --secondary-contrast-text: #263238;
-  // default to 6 columns. This will be changed by react on demand.
-  --columns: 8;
 }
 
 .minefield {
+  // default to 8 columns. This will be changed by react on demand.
+  --columns: 8;
   // The content width you use on your website
   --content-width: 96vw;
-
   // The size of the gutter
   --gutter: 1vw;
-
   // This is the calculation for the row height.
   --row-size: calc(
     (var(--content-width) - (var(--gutter) * (var(--columns) - 1))) /
@@ -51,6 +49,7 @@
     align-self: stretch;
     background: var(--secondary-light);
     border-radius: 50%;
+    color: var(--secondary-contrast-text);
     justify-self: stretch;
   }
 }

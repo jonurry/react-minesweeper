@@ -10,10 +10,10 @@
   --secondary-light: #ffe97d;
   --secondary-main: #ffb74d;
   --secondary-dark: #c88719;
-  --secondary-contrast-text: #263238;
-  --columns: 8; }
+  --secondary-contrast-text: #263238; }
 
 .minefield {
+  --columns: 8;
   --content-width: 96vw;
   --gutter: 1vw;
   --row-size: calc(
@@ -35,4 +35,5 @@
     align-self: stretch;
     background: var(--secondary-light);
     border-radius: 50%;
+    color: var(--secondary-contrast-text);
     justify-self: stretch; }
