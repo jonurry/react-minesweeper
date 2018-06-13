@@ -125,222 +125,78 @@ exports[`renders without crashing (ReactRenderer) 1`] = `
       }
     }
   >
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
-    <div>
-      ?
-    </div>
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
+    <div />
   </div>
 </div>
 `;
