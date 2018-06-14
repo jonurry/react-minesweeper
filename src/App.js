@@ -50,7 +50,7 @@ const Minefield = props => {
   let minefield = [];
   let key = 0;
   for (let item of props.minefield) {
-    minefield.push(<div key={key++}>{item.value}</div>);
+    minefield.push(<div key={key++} />);
   }
   return minefield;
 };
@@ -73,7 +73,6 @@ class App extends Component {
     this.state = {
       difficulty: 'easy',
       minefield: new Model(),
-      mines: 10,
       minesToBeFound: 10,
       time: null
     };
@@ -195,7 +194,13 @@ class App extends Component {
     }
     ({ columns, rows } = this.getMinefieldDimensions(difficulty));
     this.setColumnsInCSSGrid(columns);
-    this.setState({ columns, difficulty, mines, minesToBeFound: mines, rows });
+    this.setState({
+      columns,
+      difficulty,
+      minefield: { mines },
+      minesToBeFound: mines,
+      rows
+    });
     this.initialiseMinefield();
   };
 
@@ -208,7 +213,7 @@ class App extends Component {
 
   initialiseMinefield = () => {
     this.setState((state, props) => ({
-      minefield: new Model(state.columns, state.rows, state.mines)
+      minefield: new Model(state.columns, state.rows, state.minefield.mines)
     }));
   };
 
