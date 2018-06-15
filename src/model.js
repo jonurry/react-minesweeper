@@ -1,4 +1,4 @@
-const flags = { none: 0, possible: 1, mine: 2 };
+export const FLAGS = { none: 0, mine: 1, possible: 2 };
 
 const getRandomIntInclusive = (min, max) => {
   min = Math.ceil(min);
@@ -24,9 +24,35 @@ class Model {
     );
     this.initialiseMinefield(spaces, mines);
   }
+  cycleFlag(position) {
+    // if the position is invalid return FLAGS.none
+    if (position < 0 || position >= this.spaces) {
+      return FLAGS.none;
+    }
+    // cycle through flags
+    // the enumeration is in the order that the flags cycle through
+    // so adding one will cycle through the flags in the correct order
+    // once upper bound is reached reset to beginning
+    let flag = this.minefield[position].flag + 1;
+    if (flag > FLAGS.possible) {
+      flag = FLAGS.none;
+    }
+    this.minefield[position].flag = flag;
+    // return the new flag at the given position
+    return flag;
+  }
+  getFlag(position) {
+    // if the position is invalid return no flag
+    if (position < 0 || position >= this.minefield.length) {
+      return FLAGS.none;
+    }
+    // return the flag at the given position
+    return this.minefield[position].flag;
+  }
   initialiseMinefield(spaces = 72, mines = 10) {
     // number of spaces should be at least 72
     // number of spaces should be exactly divisible by 72
+    //   this is so that all rows are full at all screen sizes
     // number of mines should not exceed 50% of the available space
 
     // round the available space to the nearest factor of 72
@@ -46,7 +72,7 @@ class Model {
     }
     this.minefield = new Array(this.spaces).fill().map(u => ({
       value: 0,
-      flagged: flags.none
+      flag: FLAGS.none
     }));
     this.placeMinesRandomlyInMinefield();
   }

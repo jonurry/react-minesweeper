@@ -1,4 +1,4 @@
-import Model from './model.js';
+import Model, { FLAGS } from './model.js';
 
 // Easy:
 //   dimensions: 8 columns - 9 rows
@@ -156,5 +156,43 @@ describe('It should populate the minefield.', () => {
     expect(model1.mines).toBe(model2.mines);
     expect(model1.minefield).not.toEqual(model2.minefield);
     expect(foundDifference).toBeTruthy();
+  });
+
+  describe('It should manage user set flags in the minefield.', () => {
+    test('It should get the default initial flags.', () => {
+      const model = new Model(); // use default settings
+      for (let i = 0; i < model.spaces; i++) {
+        expect(model.getFlag(i)).toBe(FLAGS.none);
+      }
+    });
+    test('It should return none for flags outside of the minefield.', () => {
+      const model = new Model(); // use default settings
+      expect(model.getFlag(-100)).toBe(FLAGS.none); // well outside lower bound
+      expect(model.getFlag(-1)).toBe(FLAGS.none); // one below lower bound
+      expect(model.getFlag(72)).toBe(FLAGS.none); // one above upper bound
+      expect(model.getFlag(7200)).toBe(FLAGS.none); //well above upper bound
+    });
+    test('It should cycle flags (none, mine, possible).', () => {
+      const model = new Model(); // use default settings
+      const flagPosition = 0;
+      expect(model.getFlag(flagPosition)).toBe(FLAGS.none);
+      let flag = model.cycleFlag(flagPosition);
+      expect(flag).toBe(FLAGS.mine);
+      expect(model.getFlag(flagPosition)).toBe(FLAGS.mine);
+      flag = model.cycleFlag(flagPosition);
+      expect(flag).toBe(FLAGS.possible);
+      expect(model.getFlag(flagPosition)).toBe(FLAGS.possible);
+      flag = model.cycleFlag(flagPosition);
+      expect(flag).toBe(FLAGS.none);
+      expect(model.getFlag(flagPosition)).toBe(FLAGS.none);
+    });
+    test('It should return none when cycling flags outside of the minefield.', () => {
+      const model = new Model(); // use default settings
+      const flagPosition = -100;
+      expect(model.getFlag(flagPosition)).toBe(FLAGS.none);
+      let flag = model.cycleFlag(flagPosition);
+      expect(flag).toBe(FLAGS.none);
+      expect(model.getFlag(flagPosition)).toBe(FLAGS.none);
+    });
   });
 });

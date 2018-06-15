@@ -70,16 +70,17 @@ const Timer = props => {
 class App extends Component {
   constructor(props) {
     super(props);
+    this.classes = props.classes;
+    this.model = new Model();
+    this.startTime = null;
+    this.timerId = 0;
     this.state = {
       difficulty: 'easy',
-      minefield: new Model(),
+      minefield: this.model.minefield.slice(),
+      mines: 10,
       minesToBeFound: 10,
       time: null
     };
-    this.classes = props.classes;
-    this.startTime = null;
-    this.timerId = 0;
-    this.minefieldRef = React.createRef();
   }
 
   componentDidMount = () => {
@@ -88,7 +89,7 @@ class App extends Component {
     ({ columns, rows } = this.getMinefieldDimensions(this.state.difficulty));
     this.setState({ columns, rows });
     this.setColumnsInCSSGrid(columns);
-    this.initialiseMinefield();
+    this.initialiseMinefield(columns * rows, this.state.mines);
   };
 
   componentWillUnmount = () => {
@@ -175,33 +176,33 @@ class App extends Component {
   };
 
   handleChangeDifficulty = event => {
-    let columns, difficulty, mines, rows;
-    this.cancelTimer();
-    switch (event.target.value) {
-      default:
-      case 'easy':
-        difficulty = 'easy';
-        mines = 10;
-        break;
-      case 'medium':
-        difficulty = 'medium';
-        mines = 40;
-        break;
-      case 'hard':
-        difficulty = 'hard';
-        mines = 100;
-        break;
+    let columns, mines, rows;
+    let difficulty = event.target.value;
+    if (difficulty !== this.state.difficulty) {
+      this.cancelTimer();
+      switch (difficulty) {
+        default:
+        case 'easy':
+          mines = 10;
+          break;
+        case 'medium':
+          mines = 40;
+          break;
+        case 'hard':
+          mines = 100;
+          break;
+      }
+      ({ columns, rows } = this.getMinefieldDimensions(difficulty));
+      this.setColumnsInCSSGrid(columns);
+      this.setState({
+        columns,
+        difficulty,
+        mines: mines,
+        minesToBeFound: mines,
+        rows
+      });
+      this.initialiseMinefield(rows * columns, mines);
     }
-    ({ columns, rows } = this.getMinefieldDimensions(difficulty));
-    this.setColumnsInCSSGrid(columns);
-    this.setState({
-      columns,
-      difficulty,
-      minefield: { mines },
-      minesToBeFound: mines,
-      rows
-    });
-    this.initialiseMinefield();
   };
 
   getElapsedTime = () => {
@@ -211,9 +212,10 @@ class App extends Component {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  initialiseMinefield = () => {
+  initialiseMinefield = (spaces, mines) => {
+    this.model.initialiseMinefield(spaces, mines);
     this.setState((state, props) => ({
-      minefield: new Model(state.columns, state.rows, state.minefield.mines)
+      minefield: this.model.minefield.slice()
     }));
   };
 
@@ -272,7 +274,6 @@ class App extends Component {
           </AppBar>
           <div
             className={`minefield ${this.state.difficulty}`}
-            ref={this.minefieldRef}
             style={this.state.minefieldStyle}
           >
             <Minefield minefield={this.state.minefield} />
