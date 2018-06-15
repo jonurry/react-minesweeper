@@ -30,10 +30,14 @@
   grid-row-gap: var(--gutter);
   justify-items: center;
   align-items: center;
-  font-size: calc(70vw / var(--columns)); }
+  font-size: calc(70vw / var(--columns));
+  line-height: var(--row-size); }
   .minefield > div {
     align-self: stretch;
     background: var(--secondary-light);
     border-radius: 50%;
     color: var(--secondary-contrast-text);
     justify-self: stretch; }
+    .minefield > div svg {
+      margin: auto;
+      height: 100%; }

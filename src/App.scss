@@ -44,6 +44,7 @@
   align-items: center;
 
   font-size: calc(70vw / var(--columns));
+  line-height: var(--row-size);
 
   > div {
     align-self: stretch;
@@ -51,5 +52,9 @@
     border-radius: 50%;
     color: var(--secondary-contrast-text);
     justify-self: stretch;
+    svg {
+      margin: auto;
+      height: 100%;
+    }
   }
 }

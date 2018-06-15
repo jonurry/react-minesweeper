@@ -12,7 +12,8 @@ import Button from '@material-ui/core/Button';
 import Badge from '@material-ui/core/Badge';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { createMuiTheme } from '@material-ui/core/styles';
-import Model from './model.js';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import Model, { FLAGS } from './model.js';
 
 // define theme colours
 const theme = createMuiTheme({
@@ -46,11 +47,61 @@ const styleToolbarCentre = {
   margin: 'auto'
 };
 
+function FlagIcon(props) {
+  return (
+    <SvgIcon {...props}>
+      <g id="Bounding_Boxes">
+        <g id="ui_x5F_spec_x5F_header_copy_3" display="none" />
+        <path fill="none" d="M0,0h24v24H0V0z" />
+      </g>
+      <g id="Duotone">
+        <g id="ui_x5F_spec_x5F_header_copy_2" display="none" />
+        <g>
+          <polygon
+            opacity="0.3"
+            points="12.36,6 7,6 7,12 14.24,12 14.64,14 18,14 18,8 12.76,8 		"
+          />
+          <path d="M14.4,6L14,4H5v17h2v-7h5.6l0.4,2h7V6H14.4z M18,14h-3.36l-0.4-2H7V6h5.36l0.4,2H18V14z" />
+        </g>
+      </g>
+    </SvgIcon>
+  );
+}
+
 const Minefield = props => {
   let minefield = [];
   let key = 0;
   for (let item of props.minefield) {
-    minefield.push(<div key={key++} />);
+    let flag;
+    switch (item.flag) {
+      default:
+      case FLAGS.none:
+        flag = '';
+        break;
+      case FLAGS.mine:
+        flag = (
+          <FlagIcon
+            className={props.classes.icon}
+            style={{
+              fontSize: props.minefieldStyle.fontSize
+            }}
+          />
+        );
+        break;
+      case FLAGS.possible:
+        flag = '?';
+        break;
+    }
+    minefield.push(
+      <div
+        key={key}
+        onClick={props.handleClick.bind(this, key)}
+        onContextMenu={props.handleClick.bind(this, key)}
+      >
+        {flag}
+      </div>
+    );
+    key++;
   }
   return minefield;
 };
@@ -81,6 +132,7 @@ class App extends Component {
       minesToBeFound: 10,
       time: null
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount = () => {
@@ -152,7 +204,7 @@ class App extends Component {
     const height = window.innerHeight - 64;
     // available screen width
     const width = window.innerWidth;
-    const fontRatio = height > width ? 0.75 : 0.8;
+    const fontRatio = height > width ? 0.5 : 0.6;
     const fontSize = `calc(var(--content-width) / var(--columns) * ${fontRatio})`;
     let contentWidth;
     let gutter;
@@ -204,6 +256,14 @@ class App extends Component {
       this.initialiseMinefield(rows * columns, mines);
     }
   };
+
+  handleClick(id, e) {
+    if (e.type === 'contextmenu') {
+      e.preventDefault();
+      const flag = this.model.cycleFlag(id);
+      this.setState({ minefield: this.model.minefield.slice() });
+    }
+  }
 
   getElapsedTime = () => {
     let timeDiff = new Date().getTime() - this.startTime;
@@ -276,7 +336,12 @@ class App extends Component {
             className={`minefield ${this.state.difficulty}`}
             style={this.state.minefieldStyle}
           >
-            <Minefield minefield={this.state.minefield} />
+            <Minefield
+              classes={this.classes}
+              minefield={this.state.minefield}
+              minefieldStyle={this.state.minefieldStyle}
+              handleClick={this.handleClick}
+            />
           </div>
         </div>
       </MuiThemeProvider>

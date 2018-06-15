@@ -121,82 +121,442 @@ exports[`renders without crashing (ReactRenderer) 1`] = `
         "--columns": 8,
         "--content-width": "calc(80vmin - 64px)",
         "--gutter": "1vh",
-        "fontSize": "calc(var(--content-width) / var(--columns) * 0.8)",
+        "fontSize": "calc(var(--content-width) / var(--columns) * 0.6)",
       }
     }
   >
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
+    <div
+      onClick={[Function]}
+      onContextMenu={[Function]}
+    >
+      
+    </div>
   </div>
 </div>
 `;
