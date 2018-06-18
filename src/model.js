@@ -12,8 +12,8 @@ function placeMinesRandomlyInMinefield() {
     let position;
     do {
       position = getRandomIntInclusive(0, upperBound);
-    } while (this.minefield[position].value === 1);
-    this.minefield[position].value = 1;
+    } while (this.minefield[position].value === '*');
+    this.minefield[position].value = '*';
   }
 }
 
@@ -40,6 +40,14 @@ class Model {
     this.minefield[position].flag = flag;
     // return the new flag at the given position
     return flag;
+  }
+  getContent(position) {
+    // if the position is invalid return 0
+    if (position < 0 || position >= this.minefield.length) {
+      return 0;
+    }
+    // return the content at the given position
+    return this.minefield[position].value;
   }
   getFlag(position) {
     // if the position is invalid return no flag
@@ -70,11 +78,31 @@ class Model {
     } else {
       this.mines = mines;
     }
-    this.minefield = new Array(this.spaces).fill().map(u => ({
-      value: 0,
-      flag: FLAGS.none
+    this.minefield = new Array(this.spaces).fill().map((curr, index) => ({
+      flag: FLAGS.none,
+      id: index,
+      revealed: false,
+      value: 0
     }));
     this.placeMinesRandomlyInMinefield();
+  }
+  isRevealed(position) {
+    // if the position is invalid return false
+    if (position < 0 || position >= this.minefield.length) {
+      return false;
+    }
+    // return whether the content is revealed or not at the given position
+    return this.minefield[position].revealed;
+  }
+  reveal(position) {
+    // if the position is invalid return 0
+    if (position < 0 || position >= this.minefield.length) {
+      return 0;
+    }
+    // mark content as revealed
+    this.minefield[position].revealed = true;
+    // return the content at the given position
+    return this.minefield[position].value;
   }
 }
 

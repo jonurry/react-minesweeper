@@ -45,7 +45,7 @@ describe('It should populate the minefield.', () => {
     const model = new Model();
     let mineCounter = 0;
     for (let item of model) {
-      if (item.value === 1) {
+      if (item.value === '*') {
         mineCounter++;
       }
     }
@@ -58,7 +58,7 @@ describe('It should populate the minefield.', () => {
     const model = new Model(spaces, mines);
     let mineCounter = 0;
     for (let item of model) {
-      if (item.value === 1) {
+      if (item.value === '*') {
         mineCounter++;
       }
     }
@@ -71,7 +71,7 @@ describe('It should populate the minefield.', () => {
     const model = new Model(spaces, mines);
     let mineCounter = 0;
     for (let item of model) {
-      if (item.value === 1) {
+      if (item.value === '*') {
         mineCounter++;
       }
     }
@@ -88,7 +88,7 @@ describe('It should populate the minefield.', () => {
     const model = new Model(spaces, mines);
     let mineCounter = 0;
     for (let item of model) {
-      if (item.value === 1) {
+      if (item.value === '*') {
         mineCounter++;
       }
     }
@@ -105,7 +105,7 @@ describe('It should populate the minefield.', () => {
     const model = new Model(spaces, mines);
     let mineCounter = 0;
     for (let item of model) {
-      if (item.value === 1) {
+      if (item.value === '*') {
         mineCounter++;
       }
     }
@@ -119,7 +119,7 @@ describe('It should populate the minefield.', () => {
     const model = new Model(spaces, mines);
     let mineCounter = 0;
     for (let item of model) {
-      if (item.value === 1) {
+      if (item.value === '*') {
         mineCounter++;
       }
     }
@@ -133,7 +133,7 @@ describe('It should populate the minefield.', () => {
     const model = new Model(spaces, mines);
     let mineCounter = 0;
     for (let item of model) {
-      if (item.value === 1) {
+      if (item.value === '*') {
         mineCounter++;
       }
     }
@@ -147,7 +147,7 @@ describe('It should populate the minefield.', () => {
     const model2 = new Model(spaces, mines);
     let foundDifference = false;
     for (let i = 0; i < spaces; i++) {
-      if (model1.minefield[i].value !== model2.minefield[i].value) {
+      if (model1.getContent(i) !== model2.getContent(i)) {
         foundDifference = true;
         break;
       }
@@ -193,6 +193,30 @@ describe('It should populate the minefield.', () => {
       let flag = model.cycleFlag(flagPosition);
       expect(flag).toBe(FLAGS.none);
       expect(model.getFlag(flagPosition)).toBe(FLAGS.none);
+    });
+  });
+
+  describe('It should reveal contents of minefield.', () => {
+    test('It should selectively reveal contents.', () => {
+      const model = new Model(); // use default settings
+      const itemsToReveal = [0, 4, 12, 17, 21, 34, 52, 59, 60, 67, 71];
+      for (let itemToReveal of itemsToReveal) {
+        // item is not revealed by default
+        expect(model.isRevealed(itemToReveal)).toBeFalsy();
+        // reveal the item
+        model.reveal(itemToReveal);
+        // item should now be revealed
+        expect(model.isRevealed(itemToReveal)).toBeTruthy();
+      }
+      for (let i = 0; i < model.spaces; i++) {
+        if (itemsToReveal.includes(i)) {
+          // item should be revealed
+          expect(model.isRevealed(i)).toBeTruthy();
+        } else {
+          // item should not be revealed
+          expect(model.isRevealed(i)).toBeFalsy();
+        }
+      }
     });
   });
 });
