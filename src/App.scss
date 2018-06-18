@@ -47,14 +47,43 @@
   line-height: var(--row-size);
 
   > div {
-    align-self: stretch;
-    background: var(--secondary-light);
-    border-radius: 50%;
-    color: var(--secondary-contrast-text);
-    justify-self: stretch;
     svg {
       margin: auto;
       height: 100%;
     }
   }
+}
+
+.scene {
+  width: 100%;
+  height: 100%;
+  perspective: calc(var(--row-size) * 3);
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  .front {
+    background: var(--secondary-light);
+    //color: var(--secondary-contrast-text);
+    color: var(--primary-dark);
+  }
+  .back {
+    color: var(--secondary-main);
+    transform: rotateY(180deg);
+  }
+  &.reveal {
+    transform: rotateY(180deg);
+  }
+}
+
+.card-face {
+  backface-visibility: hidden;
+  border-radius: 50%;
+  height: 100%;
+  position: absolute;
+  width: 100%;
 }

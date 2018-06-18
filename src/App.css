@@ -32,12 +32,33 @@
   align-items: center;
   font-size: calc(70vw / var(--columns));
   line-height: var(--row-size); }
-  .minefield > div {
-    align-self: stretch;
+  .minefield > div svg {
+    margin: auto;
+    height: 100%; }
+
+.scene {
+  width: 100%;
+  height: 100%;
+  perspective: calc(var(--row-size) * 3); }
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 1s;
+  transform-style: preserve-3d; }
+  .card .front {
     background: var(--secondary-light);
-    border-radius: 50%;
-    color: var(--secondary-contrast-text);
-    justify-self: stretch; }
-    .minefield > div svg {
-      margin: auto;
-      height: 100%; }
+    color: var(--primary-dark); }
+  .card .back {
+    color: var(--secondary-main);
+    transform: rotateY(180deg); }
+  .card.reveal {
+    transform: rotateY(180deg); }
+
+.card-face {
+  backface-visibility: hidden;
+  border-radius: 50%;
+  height: 100%;
+  position: absolute;
+  width: 100%; }

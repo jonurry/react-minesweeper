@@ -79,7 +79,7 @@ function MineIcon(props) {
         <g id="ui_x5F_spec_x5F_header_copy_2" />
         <g>
           <path
-            fill-opacity="0.3"
+            fillOpacity="0.3"
             d="M18,9.52V6h-3.52L12,3.52L9.52,6H6v3.52L3.52,12L6,14.48V18h3.52L12,20.48L14.48,18H18v-3.52L20.48,12
             L18,9.52z M12,18c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S15.31,18,12,18z"
           />
@@ -101,19 +101,41 @@ function MineIcon(props) {
 const Minefield = props => {
   let minefield = [];
   let key = 0;
+  let fontSize =
+    typeof props.minefieldStyle === 'undefined'
+      ? '100%'
+      : props.minefieldStyle.fontSize;
   for (let item of props.minefield) {
+    let content = '';
+    if (item.revealed) {
+      switch (item.value) {
+        case 0:
+          content = '';
+          break;
+        case '*':
+          content = (
+            <MineIcon
+              className={props.classes.icon}
+              style={{
+                fontSize: fontSize
+              }}
+            />
+          );
+          break;
+
+        default:
+          content = item.value;
+          break;
+      }
+    }
     let flag;
     switch (item.flag) {
-      default:
-      case FLAGS.none:
-        flag = '';
-        break;
       case FLAGS.mine:
         flag = (
           <FlagIcon
             className={props.classes.icon}
             style={{
-              fontSize: props.minefieldStyle.fontSize
+              fontSize: fontSize
             }}
           />
         );
@@ -121,14 +143,21 @@ const Minefield = props => {
       case FLAGS.possible:
         flag = '?';
         break;
+      case FLAGS.none:
+      default:
+        flag = '';
+        break;
     }
     minefield.push(
-      <div
-        key={key}
-        onClick={props.handleClick.bind(this, key)}
-        onContextMenu={props.handleClick.bind(this, key)}
-      >
-        {flag}
+      <div className="scene" key={key}>
+        <div
+          className={`card ${item.revealed ? 'reveal' : ''}`}
+          onClick={props.handleClick.bind(this, key)}
+          onContextMenu={props.handleClick.bind(this, key)}
+        >
+          <div className="card-face front">{flag}</div>
+          <div className="card-face back">{content}</div>
+        </div>
       </div>
     );
     key++;
@@ -288,10 +317,20 @@ class App extends Component {
   };
 
   handleClick(id, e) {
-    if (e.type === 'contextmenu') {
-      e.preventDefault();
-      const flag = this.model.cycleFlag(id);
-      this.setState({ minefield: this.model.minefield.slice() });
+    e.preventDefault();
+    switch (e.type) {
+      case 'click':
+        if (!this.model.isRevealed(id)) {
+          this.model.reveal(id);
+          this.setState({ minefield: this.model.minefield.slice() });
+        }
+        break;
+      case 'contextmenu':
+        this.model.cycleFlag(id);
+        this.setState({ minefield: this.model.minefield.slice() });
+        break;
+      default:
+        break;
     }
   }
 
