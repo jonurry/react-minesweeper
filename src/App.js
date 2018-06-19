@@ -194,19 +194,6 @@ class App extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount = () => {
-    // set the size of the minefield
-    let columns, rows;
-    ({ columns, rows } = this.getMinefieldDimensions(this.state.difficulty));
-    this.setState({ columns, rows });
-    this.setColumnsInCSSGrid(columns);
-    this.initialiseMinefield(columns * rows, this.state.mines);
-  };
-
-  componentWillUnmount = () => {
-    this.cancelTimer();
-  };
-
   cancelTimer = () => {
     if (this.timerId !== 0) {
       clearInterval(this.timerId);
@@ -214,6 +201,34 @@ class App extends Component {
       this.timerId = 0;
       this.setState({ time: null });
     }
+  };
+
+  componentDidMount = () => {
+    // set the size of the minefield
+    let columns, rows;
+    ({ columns, rows } = this.getMinefieldDimensions(this.state.difficulty));
+    this.setState({ columns, rows });
+    this.setColumnsInCSSGrid(columns);
+    this.initialiseMinefield(columns * rows, this.state.mines);
+    this.model.columns = columns;
+    this.model.rows = rows;
+  };
+
+  componentWillUnmount = () => {
+    this.cancelTimer();
+  };
+
+  getMinefieldDimensions = difficulty => {
+    // get the screen width
+    const width = window.innerWidth;
+    let columns = 8; // default to 8 columns in easy mode
+    // work out the optimum number for columns for the screen width
+    if (difficulty !== 'easy') {
+      columns = this.getNumberOfColumnsForMinefield(width);
+    }
+    // work out the number of rows required for the chosen difficulty
+    const rows = this.getNumberOfRowsForMinefield(columns, difficulty);
+    return { columns, rows };
   };
 
   getNumberOfColumnsForMinefield = width => {
@@ -245,19 +260,6 @@ class App extends Component {
     }
   };
 
-  getMinefieldDimensions = difficulty => {
-    // get the screen width
-    const width = window.innerWidth;
-    let columns = 8; // default to 8 columns in easy mode
-    // work out the optimum number for columns for the screen width
-    if (difficulty !== 'easy') {
-      columns = this.getNumberOfColumnsForMinefield(width);
-    }
-    // work out the number of rows required for the chosen difficulty
-    const rows = this.getNumberOfRowsForMinefield(columns, difficulty);
-    return { columns, rows };
-  };
-
   setColumnsInCSSGrid = columns => {
     // available screen height - toolbar height
     const height = window.innerHeight - 64;
@@ -286,6 +288,31 @@ class App extends Component {
     });
   };
 
+  getElapsedTime = () => {
+    let timeDiff = new Date().getTime() - this.startTime;
+    let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  handleClick(id, e) {
+    e.preventDefault();
+    switch (e.type) {
+      case 'click':
+        if (!this.model.isRevealed(id)) {
+          this.model.reveal(id);
+          this.setState({ minefield: this.model.minefield.slice() });
+        }
+        break;
+      case 'contextmenu':
+        this.model.cycleFlag(id);
+        this.setState({ minefield: this.model.minefield.slice() });
+        break;
+      default:
+        break;
+    }
+  }
+
   handleChangeDifficulty = event => {
     let columns, mines, rows;
     let difficulty = event.target.value;
@@ -313,32 +340,9 @@ class App extends Component {
         rows
       });
       this.initialiseMinefield(rows * columns, mines);
+      this.model.columns = columns;
+      this.model.rows = rows;
     }
-  };
-
-  handleClick(id, e) {
-    e.preventDefault();
-    switch (e.type) {
-      case 'click':
-        if (!this.model.isRevealed(id)) {
-          this.model.reveal(id);
-          this.setState({ minefield: this.model.minefield.slice() });
-        }
-        break;
-      case 'contextmenu':
-        this.model.cycleFlag(id);
-        this.setState({ minefield: this.model.minefield.slice() });
-        break;
-      default:
-        break;
-    }
-  }
-
-  getElapsedTime = () => {
-    let timeDiff = new Date().getTime() - this.startTime;
-    let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
   initialiseMinefield = (spaces, mines) => {
@@ -346,14 +350,6 @@ class App extends Component {
     this.setState((state, props) => ({
       minefield: this.model.minefield.slice()
     }));
-  };
-
-  startGame = () => {
-    this.cancelTimer();
-    this.startTime = new Date().getTime();
-    this.timerId = setInterval(() => {
-      this.setState({ time: this.getElapsedTime() });
-    }, 1000);
   };
 
   render() {
@@ -416,6 +412,14 @@ class App extends Component {
       </MuiThemeProvider>
     );
   }
+
+  startGame = () => {
+    this.cancelTimer();
+    this.startTime = new Date().getTime();
+    this.timerId = setInterval(() => {
+      this.setState({ time: this.getElapsedTime() });
+    }, 1000);
+  };
 }
 
 App.propTypes = {

@@ -219,4 +219,62 @@ describe('It should populate the minefield.', () => {
       }
     });
   });
+
+  describe('It should work out the number of adjacent mines.', () => {
+    const x = '*';
+    let minefieldInitial;
+    let minefieldNeighbours;
+    beforeEach(() => {
+      // prettier-ignore
+      minefieldInitial = [
+        0,0,x,0,0,0,0,x,
+        0,0,0,0,0,0,x,0,
+        0,0,0,x,x,0,0,0,
+        0,0,0,0,0,0,0,0,
+        x,0,0,0,0,0,0,0,
+        x,0,x,0,0,0,0,0,
+        0,x,0,0,0,0,0,0,
+        0,0,0,0,0,0,x,0,
+        0,0,0,0,0,0,0,0
+      ];
+      minefieldInitial = minefieldInitial.map((x, i) => {
+        return {
+          flag: FLAGS.none,
+          id: i,
+          revealed: false,
+          value: x
+        };
+      });
+      // prettier-ignore
+      minefieldNeighbours = [
+        0,1,x,1,0,1,2,x,
+        0,1,2,3,2,2,x,2,
+        0,0,1,x,x,2,1,1,
+        1,1,1,2,2,1,0,0,
+        x,3,1,1,0,0,0,0,
+        x,4,x,1,0,0,0,0,
+        2,x,2,1,0,1,1,1,
+        1,1,1,0,0,1,x,1,
+        0,0,0,0,0,1,1,1
+      ];
+      minefieldNeighbours = minefieldNeighbours.map((x, i) => {
+        return {
+          flag: FLAGS.none,
+          id: i,
+          revealed: false,
+          value: x
+        };
+      });
+    });
+    test('', () => {
+      const model = new Model(); // use default settings
+      model.minefield = minefieldInitial; // set the minefield configuration to have known mine placement
+      model.populateNumberOfNearestMines();
+      expect(model.minefield).toEqual(minefieldNeighbours);
+    });
+    test('', () => {});
+    test('', () => {});
+    test('', () => {});
+    test('', () => {});
+  });
 });

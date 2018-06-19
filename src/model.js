@@ -18,12 +18,13 @@ function placeMinesRandomlyInMinefield() {
 }
 
 class Model {
-  constructor(spaces, mines) {
+  constructor(spaces, mines, columns) {
     this.placeMinesRandomlyInMinefield = placeMinesRandomlyInMinefield.bind(
       this
     );
-    this.initialiseMinefield(spaces, mines);
+    this.initialiseMinefield(spaces, mines, columns);
   }
+
   cycleFlag(position) {
     // if the position is invalid return FLAGS.none
     if (position < 0 || position >= this.spaces) {
@@ -41,6 +42,7 @@ class Model {
     // return the new flag at the given position
     return flag;
   }
+
   getContent(position) {
     // if the position is invalid return 0
     if (position < 0 || position >= this.minefield.length) {
@@ -49,6 +51,7 @@ class Model {
     // return the content at the given position
     return this.minefield[position].value;
   }
+
   getFlag(position) {
     // if the position is invalid return no flag
     if (position < 0 || position >= this.minefield.length) {
@@ -57,7 +60,8 @@ class Model {
     // return the flag at the given position
     return this.minefield[position].flag;
   }
-  initialiseMinefield(spaces = 72, mines = 10) {
+
+  initialiseMinefield(spaces = 72, mines = 10, columns = 8) {
     // number of spaces should be at least 72
     // number of spaces should be exactly divisible by 72
     //   this is so that all rows are full at all screen sizes
@@ -84,8 +88,11 @@ class Model {
       revealed: false,
       value: 0
     }));
+    this.columns = columns;
     this.placeMinesRandomlyInMinefield();
+    this.populateNumberOfNearestMines();
   }
+
   isRevealed(position) {
     // if the position is invalid return false
     if (position < 0 || position >= this.minefield.length) {
@@ -94,6 +101,47 @@ class Model {
     // return whether the content is revealed or not at the given position
     return this.minefield[position].revealed;
   }
+
+  populateNumberOfNearestMines() {
+    // work out the number of nearest mines for each minefield location
+    let columns = this.columns;
+    const countMine = pos => {
+      // if there is a mine at the specified position then return 1
+      // otherwise return 0
+      if (this.getContent(pos) === '*') {
+        return 1;
+      } else {
+        return 0;
+      }
+    };
+    this.minefield.map((x, i) => {
+      if (this.getContent(i) !== '*') {
+        let mines = 0;
+        // is the current position on the left of the minefield?
+        let left = i % columns === 0;
+        // is the current position on the right of the minefield?
+        let right = (i + 1) % columns === 0;
+        let nw = left ? 0 : countMine(i - columns - 1);
+        let n = countMine(i - columns);
+        let ne = right ? 0 : countMine(i - columns + 1);
+        let w = left ? 0 : countMine(i - 1);
+        let e = right ? 0 : countMine(i + 1);
+        let sw = left ? 0 : countMine(i + columns - 1);
+        let s = countMine(i + columns);
+        let se = right ? 0 : countMine(i + columns + 1);
+        // prettier-ignore
+        let neighbours = [
+          nw, n, ne,
+           w, 0, e,
+          sw, s, se
+        ];
+        mines = neighbours.reduce((acc, curr) => acc + curr);
+        x.value = mines;
+      }
+      return x;
+    });
+  }
+
   reveal(position) {
     // if the position is invalid return 0
     if (position < 0 || position >= this.minefield.length) {
