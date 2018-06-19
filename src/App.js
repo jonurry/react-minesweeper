@@ -405,32 +405,43 @@ class App extends Component {
 
   handleClick(id, e) {
     e.preventDefault();
-    switch (e.type) {
-      case 'click':
-        if (!this.model.isRevealed(id)) {
-          this.model.reveal(id);
-          this.setState({ minefield: this.model.minefield.slice() });
-        }
-        if (this.model.gameStatus === GAME_STATUS.initialised) {
-          this.startGame();
-        }
-        break;
-      case 'contextmenu':
-        let minesToBeFound = this.state.minesToBeFound;
-        const flag = this.model.cycleFlag(id);
-        if (flag === FLAGS.mine) {
-          minesToBeFound--;
-        }
-        if (flag === FLAGS.possible) {
-          minesToBeFound++;
-        }
-        this.setState({
-          minefield: this.model.minefield.slice(),
-          minesToBeFound
-        });
-        break;
-      default:
-        break;
+    // if the game is initialised or started then process click
+    if (
+      this.model.gameStatus === GAME_STATUS.initialised ||
+      this.model.gameStatus === GAME_STATUS.started
+    ) {
+      switch (e.type) {
+        case 'click':
+          if (!this.model.isRevealed(id)) {
+            const content = this.model.reveal(id);
+            if (content === '*') {
+              // clicked on a mine - game over
+              this.model.gameStatus = GAME_STATUS.lost;
+              this.stopTimer();
+            }
+            this.setState({ minefield: this.model.minefield.slice() });
+          }
+          if (this.model.gameStatus === GAME_STATUS.initialised) {
+            this.startGame();
+          }
+          break;
+        case 'contextmenu':
+          let minesToBeFound = this.state.minesToBeFound;
+          const flag = this.model.cycleFlag(id);
+          if (flag === FLAGS.mine) {
+            minesToBeFound--;
+          }
+          if (flag === FLAGS.possible) {
+            minesToBeFound++;
+          }
+          this.setState({
+            minefield: this.model.minefield.slice(),
+            minesToBeFound
+          });
+          break;
+        default:
+          break;
+      }
     }
   }
 
@@ -588,6 +599,14 @@ class App extends Component {
       this.setState({ time: this.getElapsedTime() });
     }, 1000);
     this.model.gameStatus = GAME_STATUS.started;
+  };
+
+  stopTimer = () => {
+    if (this.timerId !== 0) {
+      clearInterval(this.timerId);
+      this.startTime = null;
+      this.timerId = 0;
+    }
   };
 }
 
