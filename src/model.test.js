@@ -1,4 +1,4 @@
-import Model, { FLAGS } from './model.js';
+import Model, { FLAGS, GAME_STATUS } from './model.js';
 
 // Easy:
 //   dimensions: 8 columns - 9 rows
@@ -203,6 +203,10 @@ describe('It should populate the minefield.', () => {
       for (let itemToReveal of itemsToReveal) {
         // item is not revealed by default
         expect(model.isRevealed(itemToReveal)).toBeFalsy();
+        // Make sure that the item to reveal is not a mine because that would end the game
+        if (model.getContent(itemToReveal) === '*') {
+          model.minefield[itemToReveal].value = 0;
+        }
         // reveal the item
         model.reveal(itemToReveal);
         // item should now be revealed
@@ -272,8 +276,42 @@ describe('It should populate the minefield.', () => {
       model.populateNumberOfNearestMines();
       expect(model.minefield).toEqual(minefieldNeighbours);
     });
-    test('', () => {});
-    test('', () => {});
+    test('It should end the game when a mine is revealed.', () => {
+      const model = new Model(); // use default settings
+      model.minefield = minefieldInitial; // set the minefield configuration to have known mine placement
+      model.populateNumberOfNearestMines();
+      expect(model.gameStatus).toBe(GAME_STATUS.initialised);
+      model.reveal(0);
+      expect(model.gameStatus).toBe(GAME_STATUS.started);
+      model.reveal(1);
+      expect(model.gameStatus).toBe(GAME_STATUS.started);
+      model.reveal(2);
+      expect(model.gameStatus).toBe(GAME_STATUS.lost);
+      // revealing after game has finished has no effect and returns zero
+      expect(model.reveal(3)).toBe(0);
+    });
+    test('It should reveal all mines when a mine is revealed.', () => {
+      const model = new Model(); // use default settings
+      model.minefield = minefieldInitial; // set the minefield configuration to have known mine placement
+      model.populateNumberOfNearestMines();
+      expect(model.gameStatus).toBe(GAME_STATUS.initialised);
+      model.reveal(0);
+      expect(model.isRevealed(0)).toBeTruthy();
+      model.reveal(1);
+      expect(model.isRevealed(1)).toBeTruthy();
+      model.reveal(2); // this is the mine and will end the game
+      // make sure all of the remaining mines are revealed
+      expect(model.isRevealed(2)).toBeTruthy();
+      expect(model.isRevealed(7)).toBeTruthy();
+      expect(model.isRevealed(14)).toBeTruthy();
+      expect(model.isRevealed(19)).toBeTruthy();
+      expect(model.isRevealed(20)).toBeTruthy();
+      expect(model.isRevealed(32)).toBeTruthy();
+      expect(model.isRevealed(40)).toBeTruthy();
+      expect(model.isRevealed(42)).toBeTruthy();
+      expect(model.isRevealed(49)).toBeTruthy();
+      expect(model.isRevealed(62)).toBeTruthy();
+    });
     test('', () => {});
     test('', () => {});
   });

@@ -251,9 +251,15 @@ const Minefield = props => {
         case '*':
           content = (
             <MineIcon
-              className={props.classes.icon}
+              className={`${props.classes.icon} ${
+                props.trippedMineId === item.id ? 'pulse' : ''
+              }`}
               style={{
-                fontSize: fontSize
+                fontSize: fontSize,
+                color:
+                  props.trippedMineId === item.id
+                    ? theme.palette.state.bad
+                    : theme.palette.secondary.main
               }}
             />
           );
@@ -412,17 +418,16 @@ class App extends Component {
     ) {
       switch (e.type) {
         case 'click':
+          if (this.model.gameStatus === GAME_STATUS.initialised) {
+            this.startGame();
+          }
           if (!this.model.isRevealed(id)) {
             const content = this.model.reveal(id);
             if (content === '*') {
               // clicked on a mine - game over
-              this.model.gameStatus = GAME_STATUS.lost;
               this.stopTimer();
             }
             this.setState({ minefield: this.model.minefield.slice() });
-          }
-          if (this.model.gameStatus === GAME_STATUS.initialised) {
-            this.startGame();
           }
           break;
         case 'contextmenu':
@@ -541,6 +546,7 @@ class App extends Component {
               minefield={this.state.minefield}
               minefieldStyle={this.state.minefieldStyle}
               handleClick={this.handleClick}
+              trippedMineId={this.model.trippedMineId}
             />
           </div>
         </div>

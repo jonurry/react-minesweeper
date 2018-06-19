@@ -18,11 +18,20 @@ function placeMinesRandomlyInMinefield() {
   }
 }
 
+function revealMines() {
+  for (let item of this.minefield) {
+    if (item.value === '*') {
+      item.revealed = true;
+    }
+  }
+}
+
 class Model {
   constructor(spaces, mines, columns) {
     this.placeMinesRandomlyInMinefield = placeMinesRandomlyInMinefield.bind(
       this
     );
+    this.revealMines = revealMines.bind(this);
     this.initialiseMinefield(spaces, mines, columns);
   }
 
@@ -91,6 +100,7 @@ class Model {
     }));
     this.columns = columns;
     this.gameStatus = GAME_STATUS.initialised;
+    this.trippedMineId = -1;
     this.placeMinesRandomlyInMinefield();
     this.populateNumberOfNearestMines();
   }
@@ -145,14 +155,31 @@ class Model {
   }
 
   reveal(position) {
-    // if the position is invalid return 0
-    if (position < 0 || position >= this.minefield.length) {
+    // if the position is invalid, or the game is over, return 0
+    if (
+      position < 0 ||
+      position >= this.minefield.length ||
+      this.gameStatus === GAME_STATUS.won ||
+      this.gameStatus === GAME_STATUS.lost
+    ) {
       return 0;
     }
     // mark content as revealed
     this.minefield[position].revealed = true;
+    // store the content of the revealed position
+    let content = this.minefield[position].value;
+    // Start the game if it isn't already started
+    if (this.gameStatus === GAME_STATUS.initialised) {
+      this.gameStatus = GAME_STATUS.started;
+    }
+    // if a mine has been revealed then it's game over
+    if (content === '*') {
+      this.gameStatus = GAME_STATUS.lost;
+      this.trippedMineId = position;
+      this.revealMines();
+    }
     // return the content at the given position
-    return this.minefield[position].value;
+    return content;
   }
 }
 
