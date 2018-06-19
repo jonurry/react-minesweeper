@@ -305,8 +305,18 @@ class App extends Component {
         }
         break;
       case 'contextmenu':
-        this.model.cycleFlag(id);
-        this.setState({ minefield: this.model.minefield.slice() });
+        let minesToBeFound = this.state.minesToBeFound;
+        const flag = this.model.cycleFlag(id);
+        if (flag === FLAGS.mine) {
+          minesToBeFound--;
+        }
+        if (flag === FLAGS.possible) {
+          minesToBeFound++;
+        }
+        this.setState({
+          minefield: this.model.minefield.slice(),
+          minesToBeFound
+        });
         break;
       default:
         break;
