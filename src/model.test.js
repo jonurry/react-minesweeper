@@ -220,10 +220,9 @@ describe('It should populate the minefield.', () => {
     });
   });
 
-  describe('It should work out the number of adjacent mines.', () => {
+  describe('It should act on a populated minefield.', () => {
     const x = '*';
     let minefieldInitial;
-    let minefieldNeighbours;
     beforeEach(() => {
       // prettier-ignore
       minefieldInitial = [
@@ -245,6 +244,9 @@ describe('It should populate the minefield.', () => {
           value: x
         };
       });
+    });
+    test('It should work out the number of adjacent mines.', () => {
+      let minefieldNeighbours;
       // prettier-ignore
       minefieldNeighbours = [
         0,1,x,1,0,1,2,x,
@@ -265,8 +267,6 @@ describe('It should populate the minefield.', () => {
           value: x
         };
       });
-    });
-    test('', () => {
       const model = new Model(); // use default settings
       model.minefield = minefieldInitial; // set the minefield configuration to have known mine placement
       model.populateNumberOfNearestMines();

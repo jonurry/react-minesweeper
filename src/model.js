@@ -1,4 +1,5 @@
 export const FLAGS = { none: 0, mine: 1, possible: 2 };
+export const GAME_STATUS = { initialised: 0, started: 1, won: 2, lost: 3 };
 
 const getRandomIntInclusive = (min, max) => {
   min = Math.ceil(min);
@@ -89,6 +90,7 @@ class Model {
       value: 0
     }));
     this.columns = columns;
+    this.gameStatus = GAME_STATUS.initialised;
     this.placeMinesRandomlyInMinefield();
     this.populateNumberOfNearestMines();
   }
