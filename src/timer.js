@@ -5,7 +5,6 @@ export default class Timer extends Component {
   constructor(props) {
     super(props);
     this.classes = props.classes;
-    this.resetTimer();
     this.state = {
       time: null
     };

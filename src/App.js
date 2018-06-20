@@ -132,35 +132,8 @@ class App extends Component {
   }
 
   handleChangeDifficulty = event => {
-    let columns, mines, rows;
     let difficulty = event.target.value;
-    if (difficulty !== this.state.difficulty) {
-      this.timer.current.resetTimer();
-      switch (difficulty) {
-        default:
-        case 'easy':
-          mines = 10;
-          break;
-        case 'medium':
-          mines = 40;
-          break;
-        case 'hard':
-          mines = 100;
-          break;
-      }
-      ({ columns, rows } = this.getMinefieldDimensions(difficulty));
-      this.setColumnsInCSSGrid(columns);
-      this.setState({
-        columns,
-        difficulty,
-        mines: mines,
-        minesToBeFound: mines,
-        rows
-      });
-      this.initialiseMinefield(rows * columns, mines);
-      this.model.columns = columns;
-      this.model.rows = rows;
-    }
+    this.resetGame(difficulty);
   };
 
   initialiseMinefield = (spaces, mines) => {
@@ -239,20 +212,36 @@ class App extends Component {
     );
   }
 
-  resetGame = () => {
-    let columns, rows;
+  resetGame = difficulty => {
+    let columns, mines, rows;
     this.timer.current.resetTimer();
-    ({ columns, rows } = this.getMinefieldDimensions(this.state.difficulty));
-    if (columns !== this.state.columns || rows !== this.state.rows) {
-      this.setColumnsInCSSGrid(columns);
-      this.setState({
-        columns,
-        rows
-      });
-      this.model.columns = columns;
-      this.model.rows = rows;
+    if (typeof difficulty !== 'string') {
+      difficulty = this.state.difficulty;
     }
-    this.initialiseMinefield(rows * columns, this.state.mines);
+    switch (difficulty) {
+      default:
+      case 'easy':
+        mines = 10;
+        break;
+      case 'medium':
+        mines = 40;
+        break;
+      case 'hard':
+        mines = 100;
+        break;
+    }
+    ({ columns, rows } = this.getMinefieldDimensions(difficulty));
+    this.setColumnsInCSSGrid(columns);
+    this.setState({
+      columns,
+      difficulty,
+      mines: mines,
+      minesToBeFound: mines,
+      rows
+    });
+    this.model.columns = columns;
+    this.model.rows = rows;
+    this.initialiseMinefield(rows * columns, mines);
   };
 
   setColumnsInCSSGrid = columns => {
