@@ -275,8 +275,11 @@ class App extends Component {
     }
     this.setState({
       minefieldStyle: {
+        // eslint-disable-next-line
         ['--columns']: columns,
+        // eslint-disable-next-line
         ['--content-width']: contentWidth,
+        // eslint-disable-next-line
         ['--gutter']: gutter,
         fontSize: fontSize
       }
