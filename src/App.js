@@ -324,8 +324,7 @@ class App extends Component {
     super(props);
     this.classes = props.classes;
     this.model = new Model();
-    this.startTime = null;
-    this.timerId = 0;
+    this.resetTimer();
     this.state = {
       difficulty: 'easy',
       minefield: this.model.minefield.slice(),
@@ -335,15 +334,6 @@ class App extends Component {
     };
     this.handleClick = this.handleClick.bind(this);
   }
-
-  cancelTimer = () => {
-    if (this.timerId !== 0) {
-      clearInterval(this.timerId);
-      this.startTime = null;
-      this.timerId = 0;
-      this.setState({ time: null });
-    }
-  };
 
   componentDidMount = () => {
     // set the size of the minefield
@@ -357,7 +347,7 @@ class App extends Component {
   };
 
   componentWillUnmount = () => {
-    this.cancelTimer();
+    this.resetTimer();
   };
 
   getMinefieldDimensions = difficulty => {
@@ -454,7 +444,7 @@ class App extends Component {
     let columns, mines, rows;
     let difficulty = event.target.value;
     if (difficulty !== this.state.difficulty) {
-      this.cancelTimer();
+      this.resetTimer();
       switch (difficulty) {
         default:
         case 'easy':
@@ -556,7 +546,7 @@ class App extends Component {
 
   resetGame = () => {
     let columns, rows;
-    this.cancelTimer();
+    this.resetTimer();
     ({ columns, rows } = this.getMinefieldDimensions(this.state.difficulty));
     if (columns !== this.state.columns || rows !== this.state.rows) {
       this.setColumnsInCSSGrid(columns);
@@ -568,6 +558,15 @@ class App extends Component {
       this.model.rows = rows;
     }
     this.initialiseMinefield(rows * columns, this.state.mines);
+  };
+
+  resetTimer = () => {
+    if (this.timerId !== 0) {
+      clearInterval(this.timerId);
+    }
+    this.startTime = null;
+    this.timerId = 0;
+    this.setState({ time: null });
   };
 
   setColumnsInCSSGrid = columns => {
@@ -599,21 +598,24 @@ class App extends Component {
   };
 
   startGame = () => {
-    this.cancelTimer();
+    this.resetTimer();
+    this.startTimer();
+    this.model.gameStatus = GAME_STATUS.started;
+  };
+
+  startTimer = () => {
     this.startTime = new Date().getTime();
     this.timerId = setInterval(() => {
       this.setState({ time: this.getElapsedTime() });
     }, 1000);
-    this.model.gameStatus = GAME_STATUS.started;
   };
 
   stopTimer = () => {
     if (this.timerId !== 0) {
       clearInterval(this.timerId);
-      this.startTime = null;
-      this.timerId = 0;
     }
   };
+
 }
 
 App.propTypes = {
