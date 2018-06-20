@@ -11,83 +11,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Badge from '@material-ui/core/Badge';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { theme, styles, styleToolbarCentre } from './theme.js';
 import Timer from './timer.js';
-import { FlagIcon, MineIcon, HappyIcon, LostIcon, WonIcon } from './icons.js';
+import { FlagIcon, MineIcon } from './icons.js';
+import Emoji from './emoji.js';
 import Model, { FLAGS, GAME_STATUS } from './model.js';
-
-// define theme colours
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      light: '#9be7ff',
-      main: '#64b5f6',
-      dark: '#2286c3',
-      contrastText: '#263238'
-    },
-    secondary: {
-      light: '#ffe97d',
-      main: '#ffb74d',
-      dark: '#c88719',
-      contrastText: '#263238'
-    },
-    state: {
-      bad: '#e57373',
-      good: '#81c784'
-    }
-  }
-});
-
-// override theme styling
-const styles = theme => ({
-  margin: {
-    margin: theme.spacing.unit * 2
-  },
-  padding: {
-    padding: `0 ${theme.spacing.unit * 2}px`
-  }
-});
-
-const styleToolbarCentre = {
-  margin: 'auto'
-};
-
-const Emoji = props => {
-  switch (props.gameStatus) {
-    case GAME_STATUS.won:
-      return (
-        <WonIcon
-          className={props.classes.icon}
-          style={{
-            color: theme.palette.state.good,
-            fontSize: '48px'
-          }}
-        />
-      );
-    case GAME_STATUS.lost:
-      return (
-        <LostIcon
-          className={props.classes.icon}
-          style={{
-            color: theme.palette.state.bad,
-            fontSize: '48px'
-          }}
-        />
-      );
-    case GAME_STATUS.initialised:
-    case GAME_STATUS.started:
-    default:
-      return (
-        <HappyIcon
-          className={props.classes.icon}
-          style={{
-            color: theme.palette.primary.dark,
-            fontSize: '48px'
-          }}
-        />
-      );
-  }
-};
 
 const Minefield = props => {
   let minefield = [];
