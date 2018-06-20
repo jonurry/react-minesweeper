@@ -23,5 +23,5 @@
   "devDependencies": {
     "react-test-renderer": "^16.4.0"
   },
-  "homepage": "https://jonurry.github.io/react-minesweeper/"
+  "homepage": "https://jonurry.github.io/react-minesweeper"
 }
