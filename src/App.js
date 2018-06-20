@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import Badge from '@material-ui/core/Badge';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { createMuiTheme } from '@material-ui/core/styles';
+import Timer from './timer.js';
 import { FlagIcon, MineIcon, HappyIcon, LostIcon, WonIcon } from './icons.js';
 import Model, { FLAGS, GAME_STATUS } from './model.js';
 
@@ -161,24 +162,11 @@ const Minefield = props => {
   return minefield;
 };
 
-const Timer = props => {
-  return (
-    <Typography
-      className={props.classes.margin}
-      variant="headline"
-      color="inherit"
-    >
-      {props.time ? props.time : '0:00'}
-    </Typography>
-  );
-};
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.classes = props.classes;
     this.model = new Model();
-    this.resetTimer();
     this.state = {
       difficulty: 'easy',
       minefield: this.model.minefield.slice(),
@@ -186,6 +174,7 @@ class App extends Component {
       minesToBeFound: 10,
       time: null
     };
+    this.timer = React.createRef();
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -201,7 +190,7 @@ class App extends Component {
   };
 
   componentWillUnmount = () => {
-    this.resetTimer();
+    this.timer.current.resetTimer();
   };
 
   getMinefieldDimensions = difficulty => {
@@ -246,13 +235,6 @@ class App extends Component {
     }
   };
 
-  getElapsedTime = () => {
-    let timeDiff = new Date().getTime() - this.startTime;
-    let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  };
-
   handleClick(id, e) {
     e.preventDefault();
     // if the game is initialised or started then process click
@@ -269,7 +251,7 @@ class App extends Component {
             const content = this.model.reveal(id);
             if (content === '*') {
               // clicked on a mine - game over
-              this.stopTimer();
+              this.timer.current.stopTimer();
             }
             this.setState({ minefield: this.model.minefield.slice() });
           }
@@ -298,7 +280,7 @@ class App extends Component {
     let columns, mines, rows;
     let difficulty = event.target.value;
     if (difficulty !== this.state.difficulty) {
-      this.resetTimer();
+      this.timer.current.resetTimer();
       switch (difficulty) {
         default:
         case 'easy':
@@ -367,8 +349,8 @@ class App extends Component {
               </Button>
               <Typography
                 className={this.classes.margin}
-                variant="subheading"
                 color="inherit"
+                variant="subheading"
               >
                 <Badge
                   className={this.classes.padding}
@@ -378,7 +360,11 @@ class App extends Component {
                   Mines
                 </Badge>
               </Typography>
-              <Timer time={this.state.time} classes={this.classes} />
+              <Timer
+                time={this.state.time}
+                classes={this.classes}
+                ref={this.timer}
+              />
             </Toolbar>
           </AppBar>
           <div
@@ -400,7 +386,7 @@ class App extends Component {
 
   resetGame = () => {
     let columns, rows;
-    this.resetTimer();
+    this.timer.current.resetTimer();
     ({ columns, rows } = this.getMinefieldDimensions(this.state.difficulty));
     if (columns !== this.state.columns || rows !== this.state.rows) {
       this.setColumnsInCSSGrid(columns);
@@ -412,15 +398,6 @@ class App extends Component {
       this.model.rows = rows;
     }
     this.initialiseMinefield(rows * columns, this.state.mines);
-  };
-
-  resetTimer = () => {
-    if (this.timerId !== 0) {
-      clearInterval(this.timerId);
-    }
-    this.startTime = null;
-    this.timerId = 0;
-    this.setState({ time: null });
   };
 
   setColumnsInCSSGrid = columns => {
@@ -452,22 +429,9 @@ class App extends Component {
   };
 
   startGame = () => {
-    this.resetTimer();
-    this.startTimer();
+    this.timer.current.resetTimer();
+    this.timer.current.startTimer();
     this.model.gameStatus = GAME_STATUS.started;
-  };
-
-  startTimer = () => {
-    this.startTime = new Date().getTime();
-    this.timerId = setInterval(() => {
-      this.setState({ time: this.getElapsedTime() });
-    }, 1000);
-  };
-
-  stopTimer = () => {
-    if (this.timerId !== 0) {
-      clearInterval(this.timerId);
-    }
   };
 }
 
