@@ -312,7 +312,31 @@ describe('It should populate the minefield.', () => {
       expect(model.isRevealed(49)).toBeTruthy();
       expect(model.isRevealed(62)).toBeTruthy();
     });
-    test('', () => {});
-    test('', () => {});
+    test('It should know when a game is won.', () => {
+      const model = new Model(); // use default settings
+      let spacesLeftToReveal = model.spaces - model.mines;
+      model.minefield = minefieldInitial; // set the minefield configuration to have known mine placement
+      model.populateNumberOfNearestMines();
+      expect(model.gameStatus).toBe(GAME_STATUS.initialised);
+      for (let item of model.minefield) {
+        // reveal locations that are not mines
+        if (item.value !== '*') {
+          model.reveal(item.id);
+          spacesLeftToReveal--;
+          if (spacesLeftToReveal > 0) {
+            expect(model.gameStatus).toBe(GAME_STATUS.started);
+          }
+        }
+      }
+      expect(model.gameStatus).toBe(GAME_STATUS.won);
+    });
+    test('It should know when a game is lost.', () => {
+      const model = new Model(); // use default settings
+      model.minefield = minefieldInitial; // set the minefield configuration to have known mine placement
+      model.populateNumberOfNearestMines();
+      expect(model.gameStatus).toBe(GAME_STATUS.initialised);
+      model.reveal(2); // this is the mine and will end the game
+      expect(model.gameStatus).toBe(GAME_STATUS.lost);
+    });
   });
 });

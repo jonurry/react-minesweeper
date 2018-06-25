@@ -92,6 +92,7 @@ class Model {
     } else {
       this.mines = mines;
     }
+    this.spacesLeftToReveal = this.spaces - this.mines;
     this.minefield = new Array(this.spaces).fill().map((curr, index) => ({
       flag: FLAGS.none,
       id: index,
@@ -166,6 +167,7 @@ class Model {
     }
     // mark content as revealed
     this.minefield[position].revealed = true;
+    this.spacesLeftToReveal--;
     // store the content of the revealed position
     let content = this.minefield[position].value;
     // Start the game if it isn't already started
@@ -177,6 +179,10 @@ class Model {
       this.gameStatus = GAME_STATUS.lost;
       this.trippedMineId = position;
       this.revealMines();
+    }
+    // if all spaces are revealed except for mines then the game is won
+    else if (this.spacesLeftToReveal === 0) {
+      this.gameStatus = GAME_STATUS.won;
     }
     // return the content at the given position
     return content;

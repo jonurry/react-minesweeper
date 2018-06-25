@@ -104,8 +104,10 @@ class App extends Component {
           }
           if (!this.model.isRevealed(id)) {
             const content = this.model.reveal(id);
-            if (content === '*') {
-              // clicked on a mine - game over
+            if (
+              this.model.gameStatus === GAME_STATUS.won ||
+              this.model.gameStatus === GAME_STATUS.lost
+            ) {
               this.timer.current.stopTimer();
             }
             this.setState({ minefield: this.model.minefield.slice() });
