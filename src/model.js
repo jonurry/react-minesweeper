@@ -124,6 +124,7 @@ class Model {
     }
     this.spacesLeftToReveal = this.spaces - this.mines;
     this.minefield = new Array(this.spaces).fill().map((curr, index) => ({
+      delay: 0,
       flag: FLAGS.none,
       id: index,
       revealed: false,
@@ -164,7 +165,7 @@ class Model {
     });
   }
 
-  reveal(position) {
+  reveal(position, recursiveCall = false) {
     let that = this;
     // if the position is invalid, or the game is over, return 0
     if (
@@ -179,6 +180,9 @@ class Model {
       // mark content as revealed
       this.minefield[position].revealed = true;
       this.spacesLeftToReveal--;
+      if (recursiveCall) {
+        this.minefield[position].delay = getRandomIntInclusive(1, 5);
+      }
     }
     // store the content of the revealed position
     let content = this.minefield[position].value;
@@ -206,7 +210,7 @@ class Model {
       // recursively reveal each neighbour
       neighbours.forEach(element => {
         if (!element.revealed) {
-          this.reveal(element.id);
+          this.reveal(element.id, true);
         }
       });
     }

@@ -62,7 +62,9 @@ const Minefield = props => {
     minefield.push(
       <div className="scene" key={key}>
         <div
-          className={`card ${item.revealed ? 'reveal' : ''}`}
+          className={`card ${item.revealed ? 'reveal' : ''} delay-${
+            item.delay
+          }`}
           onClick={props.handleClick.bind(this, key)}
           onContextMenu={props.handleClick.bind(this, key)}
         >
