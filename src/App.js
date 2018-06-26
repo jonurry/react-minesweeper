@@ -39,9 +39,9 @@ class App extends Component {
     ({ columns, rows } = this.getMinefieldDimensions(this.state.difficulty));
     this.setState({ columns, rows });
     this.setColumnsInCSSGrid(columns);
-    this.initialiseMinefield(columns * rows, this.state.mines);
     this.model.columns = columns;
     this.model.rows = rows;
+    this.initialiseMinefield(columns * rows, this.state.mines, columns);
   };
 
   componentWillUnmount = () => {
@@ -138,8 +138,8 @@ class App extends Component {
     this.resetGame(difficulty);
   };
 
-  initialiseMinefield = (spaces, mines) => {
-    this.model.initialiseMinefield(spaces, mines);
+  initialiseMinefield = (spaces, mines, columns) => {
+    this.model.initialiseMinefield(spaces, mines, columns);
     this.setState((state, props) => ({
       minefield: this.model.minefield.slice()
     }));
@@ -243,7 +243,7 @@ class App extends Component {
     });
     this.model.columns = columns;
     this.model.rows = rows;
-    this.initialiseMinefield(rows * columns, mines);
+    this.initialiseMinefield(rows * columns, mines, columns);
   };
 
   setColumnsInCSSGrid = columns => {
