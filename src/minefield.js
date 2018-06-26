@@ -1,7 +1,7 @@
 import React from 'react';
 import { FlagIcon, MineIcon } from './icons.js';
 import { theme } from './theme.js';
-import { FLAGS } from './model.js';
+import { FLAGS, GAME_STATUS } from './model.js';
 
 const Minefield = props => {
   let minefield = [];
@@ -26,9 +26,9 @@ const Minefield = props => {
               style={{
                 fontSize: fontSize,
                 color:
-                  props.trippedMineId === item.id
-                    ? theme.palette.state.bad
-                    : theme.palette.secondary.main
+                  props.gameStatus === GAME_STATUS.won
+                    ? theme.palette.state.good
+                    : theme.palette.state.bad
               }}
             />
           );

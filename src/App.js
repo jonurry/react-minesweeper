@@ -207,6 +207,7 @@ class App extends Component {
               minefieldStyle={this.state.minefieldStyle}
               handleClick={this.handleClick}
               trippedMineId={this.model.trippedMineId}
+              gameStatus={this.model.gameStatus}
             />
           </div>
         </div>

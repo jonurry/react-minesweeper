@@ -195,6 +195,7 @@ class Model {
     // if all spaces are revealed except for mines then the game is won
     else if (this.spacesLeftToReveal === 0) {
       this.gameStatus = GAME_STATUS.won;
+      this.revealMines();
     } else if (content === 0) {
       // get nearest neighbours to reveal
       let neighbours = getNearestNeighbours.call(that, position);
