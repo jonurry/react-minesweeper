@@ -1,6 +1,35 @@
 export const FLAGS = { none: 0, mine: 1, possible: 2 };
 export const GAME_STATUS = { initialised: 0, started: 1, won: 2, lost: 3 };
 
+function getNearestNeighbours(position) {
+  // work out the nearest neighbours for the given minefield location
+  let neighbours = [];
+  let columns = this.columns;
+  // is the current position on the left of the minefield?
+  let left = position % columns === 0;
+  // is the current position on the right of the minefield?
+  let right = (position + 1) % columns === 0;
+  let nw = left ? undefined : this.minefield[position - columns - 1];
+  let n = this.minefield[position - columns];
+  let ne = right ? undefined : this.minefield[position - columns + 1];
+  let w = left ? undefined : this.minefield[position - 1];
+  let e = right ? undefined : this.minefield[position + 1];
+  let sw = left ? undefined : this.minefield[position + columns - 1];
+  let s = this.minefield[position + columns];
+  let se = right ? undefined : this.minefield[position + columns + 1];
+  // prettier-ignore
+  neighbours = [
+    nw, n, ne,
+     w,     e,
+    sw, s, se
+  ];
+  // exclude neighbours that are outside the minefield
+  neighbours = neighbours.filter(value => {
+    return value !== undefined;
+  });
+  return neighbours;
+}
+
 const getRandomIntInclusive = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -28,6 +57,7 @@ function revealMines() {
 
 class Model {
   constructor(spaces, mines, columns) {
+    this.getNearestNeighbours = getNearestNeighbours.bind(this);
     this.placeMinesRandomlyInMinefield = placeMinesRandomlyInMinefield.bind(
       this
     );
@@ -117,38 +147,17 @@ class Model {
 
   populateNumberOfNearestMines() {
     // work out the number of nearest mines for each minefield location
-    let columns = this.columns;
-    const countMine = pos => {
-      // if there is a mine at the specified position then return 1
-      // otherwise return 0
-      if (this.getContent(pos) === '*') {
-        return 1;
-      } else {
-        return 0;
-      }
-    };
+    let that = this;
     this.minefield.map((x, i) => {
-      if (this.getContent(i) !== '*') {
-        let mines = 0;
-        // is the current position on the left of the minefield?
-        let left = i % columns === 0;
-        // is the current position on the right of the minefield?
-        let right = (i + 1) % columns === 0;
-        let nw = left ? 0 : countMine(i - columns - 1);
-        let n = countMine(i - columns);
-        let ne = right ? 0 : countMine(i - columns + 1);
-        let w = left ? 0 : countMine(i - 1);
-        let e = right ? 0 : countMine(i + 1);
-        let sw = left ? 0 : countMine(i + columns - 1);
-        let s = countMine(i + columns);
-        let se = right ? 0 : countMine(i + columns + 1);
-        // prettier-ignore
-        let neighbours = [
-          nw, n, ne,
-           w, 0, e,
-          sw, s, se
-        ];
-        mines = neighbours.reduce((acc, curr) => acc + curr);
+      if (x.value !== '*') {
+        let neighbours = getNearestNeighbours.call(that, i);
+        let mines = neighbours.reduce((acc, curr) => {
+          if (curr.value === '*') {
+            return acc + 1;
+          } else {
+            return acc;
+          }
+        }, 0);
         x.value = mines;
       }
       return x;
@@ -156,6 +165,7 @@ class Model {
   }
 
   reveal(position) {
+    let that = this;
     // if the position is invalid, or the game is over, return 0
     if (
       position < 0 ||
@@ -165,9 +175,11 @@ class Model {
     ) {
       return 0;
     }
-    // mark content as revealed
-    this.minefield[position].revealed = true;
-    this.spacesLeftToReveal--;
+    if (!this.isRevealed(position)) {
+      // mark content as revealed
+      this.minefield[position].revealed = true;
+      this.spacesLeftToReveal--;
+    }
     // store the content of the revealed position
     let content = this.minefield[position].value;
     // Start the game if it isn't already started
@@ -183,6 +195,19 @@ class Model {
     // if all spaces are revealed except for mines then the game is won
     else if (this.spacesLeftToReveal === 0) {
       this.gameStatus = GAME_STATUS.won;
+    } else if (content === 0) {
+      // get nearest neighbours to reveal
+      let neighbours = getNearestNeighbours.call(that, position);
+      // filter out neighbours that have already been revealed
+      neighbours = neighbours.filter(value => {
+        return !value.revealed;
+      });
+      // recursively reveal each neighbour
+      neighbours.forEach(element => {
+        if (!element.revealed) {
+          this.reveal(element.id);
+        }
+      });
     }
     // return the content at the given position
     return content;

@@ -103,7 +103,7 @@ class App extends Component {
             this.startGame();
           }
           if (!this.model.isRevealed(id)) {
-            const content = this.model.reveal(id);
+            this.model.reveal(id);
             if (
               this.model.gameStatus === GAME_STATUS.won ||
               this.model.gameStatus === GAME_STATUS.lost

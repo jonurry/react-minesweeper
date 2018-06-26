@@ -157,6 +157,13 @@ describe('It should populate the minefield.', () => {
     expect(model1.minefield).not.toEqual(model2.minefield);
     expect(foundDifference).toBeTruthy();
   });
+  test('It should not reveal any positions after initialisation.', () => {
+    const model = new Model(); // use default settings
+    for (let item of model.minefield) {
+      // item should not be revealed
+      expect(model.isRevealed(item.id)).toBeFalsy();
+    }
+  });
 
   describe('It should manage user set flags in the minefield.', () => {
     test('It should get the default initial flags.', () => {
@@ -201,24 +208,12 @@ describe('It should populate the minefield.', () => {
       const model = new Model(); // use default settings
       const itemsToReveal = [0, 4, 12, 17, 21, 34, 52, 59, 60, 67, 71];
       for (let itemToReveal of itemsToReveal) {
-        // item is not revealed by default
-        expect(model.isRevealed(itemToReveal)).toBeFalsy();
         // Make sure that the item to reveal is not a mine because that would end the game
-        if (model.getContent(itemToReveal) === '*') {
-          model.minefield[itemToReveal].value = 0;
-        }
-        // reveal the item
-        model.reveal(itemToReveal);
-        // item should now be revealed
-        expect(model.isRevealed(itemToReveal)).toBeTruthy();
-      }
-      for (let i = 0; i < model.spaces; i++) {
-        if (itemsToReveal.includes(i)) {
-          // item should be revealed
-          expect(model.isRevealed(i)).toBeTruthy();
-        } else {
-          // item should not be revealed
-          expect(model.isRevealed(i)).toBeFalsy();
+        if (model.getContent(itemToReveal) !== '*') {
+          // reveal the item
+          model.reveal(itemToReveal);
+          // item should now be revealed
+          expect(model.isRevealed(itemToReveal)).toBeTruthy();
         }
       }
     });
@@ -337,6 +332,51 @@ describe('It should populate the minefield.', () => {
       expect(model.gameStatus).toBe(GAME_STATUS.initialised);
       model.reveal(2); // this is the mine and will end the game
       expect(model.gameStatus).toBe(GAME_STATUS.lost);
+    });
+    test('It should reveal nearest neighbours until a number greater than 0 is found.', () => {
+      const model = new Model(); // use default settings
+      model.minefield = minefieldInitial; // set the minefield configuration to have known mine placement
+      model.populateNumberOfNearestMines();
+      // 0,1,x,1,0,1,2,x,     7
+      // 0,1,2,3,2,2,x,2,     15
+      // 0,0,1,x,x,2,1,1,     23
+      // 1,1,1,2,2,1,0,0,     31
+      // x,3,1,1,0,0,0,0,     39
+      // x,4,x,1,0,0,0,0,     47
+      // 2,x,2,1,0,1,1,1,     55
+      // 1,1,1,0,0,1,x,1,     63
+      // 0,0,0,0,0,1,1,1      71
+      model.reveal(37);
+      expect(model.isRevealed(21)).toBeTruthy();
+      expect(model.isRevealed(22)).toBeTruthy();
+      expect(model.isRevealed(23)).toBeTruthy();
+      expect(model.isRevealed(29)).toBeTruthy();
+      expect(model.isRevealed(30)).toBeTruthy();
+      expect(model.isRevealed(31)).toBeTruthy();
+      expect(model.isRevealed(35)).toBeTruthy();
+      expect(model.isRevealed(36)).toBeTruthy();
+      expect(model.isRevealed(38)).toBeTruthy();
+      expect(model.isRevealed(39)).toBeTruthy();
+      expect(model.isRevealed(43)).toBeTruthy();
+      expect(model.isRevealed(44)).toBeTruthy();
+      expect(model.isRevealed(45)).toBeTruthy();
+      expect(model.isRevealed(46)).toBeTruthy();
+      expect(model.isRevealed(47)).toBeTruthy();
+      expect(model.isRevealed(51)).toBeTruthy();
+      expect(model.isRevealed(52)).toBeTruthy();
+      expect(model.isRevealed(53)).toBeTruthy();
+      expect(model.isRevealed(56)).toBeTruthy();
+      expect(model.isRevealed(57)).toBeTruthy();
+      expect(model.isRevealed(58)).toBeTruthy();
+      expect(model.isRevealed(59)).toBeTruthy();
+      expect(model.isRevealed(60)).toBeTruthy();
+      expect(model.isRevealed(61)).toBeTruthy();
+      expect(model.isRevealed(64)).toBeTruthy();
+      expect(model.isRevealed(65)).toBeTruthy();
+      expect(model.isRevealed(66)).toBeTruthy();
+      expect(model.isRevealed(67)).toBeTruthy();
+      expect(model.isRevealed(68)).toBeTruthy();
+      expect(model.isRevealed(69)).toBeTruthy();
     });
   });
 });
