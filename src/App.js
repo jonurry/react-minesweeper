@@ -104,13 +104,18 @@ class App extends Component {
           }
           if (!this.model.isRevealed(id)) {
             this.model.reveal(id);
+            let minesToBeFound = this.state.minesToBeFound;
             if (
               this.model.gameStatus === GAME_STATUS.won ||
               this.model.gameStatus === GAME_STATUS.lost
             ) {
               this.timer.current.stopTimer();
+              minesToBeFound = 0;
             }
-            this.setState({ minefield: this.model.minefield.slice() });
+            this.setState({
+              minefield: this.model.minefield.slice(),
+              minesToBeFound
+            });
           }
           break;
         case 'contextmenu':
