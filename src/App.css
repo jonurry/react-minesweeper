@@ -22,7 +22,7 @@
   );
   display: grid;
   width: 100%;
-  margin: 2vw auto;
+  margin: calc(2vw + 64px) auto 2vw auto;
   max-width: var(--content-width);
   grid-template-columns: repeat(var(--columns), 1fr);
   grid-auto-rows: var(--row-size);

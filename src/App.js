@@ -155,7 +155,7 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <div className="App">
-          <AppBar position="static">
+          <AppBar position="fixed">
             <Toolbar disableGutters={true} style={styleToolbarCentre}>
               <Select
                 className={this.classes.margin}
