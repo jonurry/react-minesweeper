@@ -42,8 +42,24 @@ function placeMinesRandomlyInMinefield() {
     let position;
     do {
       position = getRandomIntInclusive(0, upperBound);
-    } while (this.minefield[position].value === '*');
-    this.minefield[position].value = '*';
+    } while (this.getContent(position) === '*');
+    this.setContent(position, '*');
+  }
+}
+
+function relocateMine(position) {
+  // check that there's a mine at the specified position
+  if (this.getContent(position) === '*') {
+    // move the mine somewhere else
+    const upperBound = this.spaces - 1;
+    let newPosition;
+    do {
+      newPosition = getRandomIntInclusive(0, upperBound);
+    } while (this.getContent(newPosition) === '*');
+    this.setContent(position, 0);
+    this.setContent(newPosition, '*');
+    // recalculate number of nearest mines
+    this.populateNumberOfNearestMines();
   }
 }
 
@@ -61,6 +77,7 @@ class Model {
     this.placeMinesRandomlyInMinefield = placeMinesRandomlyInMinefield.bind(
       this
     );
+    this.relocateMine = relocateMine.bind(this);
     this.revealMines = revealMines.bind(this);
     this.initialiseMinefield(spaces, mines, columns);
   }
@@ -176,6 +193,13 @@ class Model {
     ) {
       return 0;
     }
+    // if first click will reveal a mine then relocate it
+    if (
+      this.gameStatus === GAME_STATUS.initialised &&
+      this.getContent(position) === '*'
+    ) {
+      this.relocateMine(position);
+    }
     if (!this.isRevealed(position)) {
       // mark content as revealed
       this.minefield[position].revealed = true;
@@ -185,7 +209,7 @@ class Model {
       }
     }
     // store the content of the revealed position
-    let content = this.minefield[position].value;
+    let content = this.getContent(position);
     // Start the game if it isn't already started
     if (this.gameStatus === GAME_STATUS.initialised) {
       this.gameStatus = GAME_STATUS.started;
@@ -216,6 +240,13 @@ class Model {
     }
     // return the content at the given position
     return content;
+  }
+
+  setContent(position, value) {
+    // if the position is valid
+    if (position >= 0 && position < this.minefield.length) {
+      this.minefield[position].value = value;
+    }
   }
 }
 

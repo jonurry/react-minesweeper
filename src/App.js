@@ -100,7 +100,8 @@ class App extends Component {
       switch (e.type) {
         case 'click':
           if (this.model.gameStatus === GAME_STATUS.initialised) {
-            this.startGame();
+            this.timer.current.resetTimer();
+            this.timer.current.startTimer();
           }
           if (!this.model.isRevealed(id)) {
             this.model.reveal(id);
@@ -281,12 +282,6 @@ class App extends Component {
         fontSize: fontSize
       }
     });
-  };
-
-  startGame = () => {
-    this.timer.current.resetTimer();
-    this.timer.current.startTimer();
-    this.model.gameStatus = GAME_STATUS.started;
   };
 }
 

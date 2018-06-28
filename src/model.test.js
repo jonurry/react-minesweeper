@@ -307,6 +307,16 @@ describe('It should populate the minefield.', () => {
       expect(model.isRevealed(49)).toBeTruthy();
       expect(model.isRevealed(62)).toBeTruthy();
     });
+    test('It should not reveal a mine on first click.', () => {
+      const model = new Model(); // use default settings
+      model.minefield = minefieldInitial; // set the minefield configuration to have known mine placement
+      model.populateNumberOfNearestMines();
+      expect(model.gameStatus).toBe(GAME_STATUS.initialised);
+      expect(model.getContent(2)).toBe('*');
+      model.reveal(2); // this is a mine
+      expect(model.getContent(2)).not.toBe('*');
+      expect(model.gameStatus).toBe(GAME_STATUS.started);
+    });
     test('It should know when a game is won.', () => {
       const model = new Model(); // use default settings
       let spacesLeftToReveal = model.spaces - model.mines;
@@ -330,6 +340,7 @@ describe('It should populate the minefield.', () => {
       model.minefield = minefieldInitial; // set the minefield configuration to have known mine placement
       model.populateNumberOfNearestMines();
       expect(model.gameStatus).toBe(GAME_STATUS.initialised);
+      model.reveal(0); // must reveal a non-mine location first
       model.reveal(2); // this is the mine and will end the game
       expect(model.gameStatus).toBe(GAME_STATUS.lost);
     });
