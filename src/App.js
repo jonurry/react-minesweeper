@@ -23,7 +23,9 @@ class App extends Component {
     this.classes = props.classes;
     this.model = new Model();
     this.state = {
-      difficulty: 'easy',
+      difficulty: ['easy', 'medium', 'hard'].includes(this.props.difficulty)
+        ? this.props.difficulty
+        : 'easy',
       minefield: this.model.minefield.slice(),
       mines: 10,
       minesToBeFound: 10,

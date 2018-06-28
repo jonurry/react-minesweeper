@@ -14,3 +14,21 @@ it('renders without crashing (ReactRenderer)', () => {
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 });
+
+it('renders easy difficulty layout', () => {
+  const component = renderer.create(<App difficulty="easy" />);
+  let tree = component.toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
+it('renders medium difficulty layout', () => {
+  const component = renderer.create(<App difficulty="medium" />);
+  let tree = component.toJSON();
+  expect(tree).toMatchSnapshot();
+});
+
+it('renders hard difficulty layout', () => {
+  const component = renderer.create(<App difficulty="hard" />);
+  let tree = component.toJSON();
+  expect(tree).toMatchSnapshot();
+});

@@ -73,6 +73,7 @@ function revealMines() {
 
 class Model {
   constructor(spaces, mines, columns) {
+    // bind private functions to this class
     this.getNearestNeighbours = getNearestNeighbours.bind(this);
     this.placeMinesRandomlyInMinefield = placeMinesRandomlyInMinefield.bind(
       this
