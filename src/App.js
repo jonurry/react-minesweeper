@@ -235,7 +235,7 @@ class App extends Component {
         mines = 10;
         break;
       case 'medium':
-        mines = 40;
+        mines = 47;
         break;
       case 'hard':
         mines = 100;
