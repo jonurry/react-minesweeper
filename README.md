@@ -1,4 +1,4 @@
-# React Minesweeper
+# <img src="./img/minesweeper.png" alt="React Minesweeper Logo" width="24"> React Minesweeper
 
 A JavaScript and React implementation of the classic MineSweeper game.
 
@@ -8,23 +8,37 @@ The game is deployed on GitHub pages and can be played here:
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app)
 
+![Playing Minesweeper](./img/minesweeper.play.png)
+
+![Winning at Minesweeper](./img/minesweeper.won.png)
+
+![Losing at Minesweeper](./img/minesweeper.lost.png)
+
 ## Getting Started
 
 Clone the repository:
 
-`git clone git@github.com:jonurry/react-minesweeper.git`
+```
+git clone git@github.com:jonurry/react-minesweeper.git
+```
 
 Install dependencies:
 
-`yarn install`
+```
+yarn install
+```
 
 Build the app:
 
-`yarn build`
+```
+yarn build
+```
 
 Start the app:
 
-`yarn start`
+```
+yarn start
+```
 
 then open a browser at:
 
@@ -32,7 +46,9 @@ then open a browser at:
 
 Test the app:
 
-`yarn test`
+```
+yarn test
+```
 
 Enjoy!
 
