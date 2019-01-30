@@ -5,10 +5,10 @@ exports[`renders easy difficulty layout 1`] = `
   className="App"
 >
   <header
-    className="MuiPaper-root-139 MuiPaper-elevation4-145 MuiAppBar-root-131 MuiAppBar-positionFixed-132 MuiAppBar-colorPrimary-137 mui-fixed"
+    className="MuiPaper-root-147 MuiPaper-elevation4-153 MuiAppBar-root-139 MuiAppBar-positionFixed-140 MuiAppBar-colorPrimary-145 mui-fixed"
   >
     <div
-      className="MuiToolbar-root-166"
+      className="MuiToolbar-root-174 MuiToolbar-regular-176"
       style={
         Object {
           "margin": "auto",
@@ -16,17 +16,17 @@ exports[`renders easy difficulty layout 1`] = `
       }
     >
       <div
-        className="MuiInput-root-173 MuiInput-underline-177 App-margin-129"
+        className="MuiInput-root-183 MuiInput-underline-187 App-margin-137"
         color=""
       >
         <div
-          className="MuiSelect-root-168"
+          className="MuiSelect-root-178"
         >
           <div
             aria-haspopup="true"
             aria-owns={null}
             aria-pressed="false"
-            className="MuiSelect-select-169 MuiSelect-selectMenu-170 MuiInput-input-181"
+            className="MuiSelect-select-179 MuiSelect-selectMenu-180 MuiInput-input-191"
             onBlur={[Function]}
             onClick={[Function]}
             onFocus={[Function]}
@@ -37,26 +37,14 @@ exports[`renders easy difficulty layout 1`] = `
             Easy
           </div>
           <input
-            aria-invalid={undefined}
-            aria-required={undefined}
-            autoComplete={undefined}
-            autoFocus={undefined}
-            defaultValue={undefined}
             id="select-difficulty"
             name="difficulty"
-            onKeyDown={undefined}
-            onKeyUp={undefined}
-            placeholder={undefined}
-            readOnly={undefined}
-            required={undefined}
-            rows={undefined}
             type="hidden"
             value="easy"
           />
           <svg
             aria-hidden="true"
-            className="MuiSvgIcon-root-186 MuiSelect-icon-172"
-            color={undefined}
+            className="MuiSvgIcon-root-196 MuiSelect-icon-182"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -68,7 +56,7 @@ exports[`renders easy difficulty layout 1`] = `
       </div>
       <button
         aria-label="reset"
-        className="MuiButtonBase-root-218 MuiButton-root-196 MuiButton-contained-205 MuiButton-fab-213 MuiButton-raised-208"
+        className="MuiButtonBase-root-233 MuiButton-root-207 MuiButton-fab-224 MuiButton-contained-218 MuiButton-raised-221"
         disabled={false}
         onBlur={[Function]}
         onClick={[Function]}
@@ -85,12 +73,11 @@ exports[`renders easy difficulty layout 1`] = `
         type="button"
       >
         <span
-          className="MuiButton-label-197"
+          className="MuiButton-label-208"
         >
           <svg
             aria-hidden="true"
-            className="MuiSvgIcon-root-186"
-            color={undefined}
+            className="MuiSvgIcon-root-196"
             focusable="false"
             style={
               Object {
@@ -143,25 +130,25 @@ exports[`renders easy difficulty layout 1`] = `
           </svg>
         </span>
         <span
-          className="MuiTouchRipple-root-221"
+          className="MuiTouchRipple-root-236"
         />
       </button>
       <h3
-        className="MuiTypography-root-228 MuiTypography-subheading-235 MuiTypography-colorInherit-247 App-margin-129"
+        className="MuiTypography-root-243 MuiTypography-subheading-250 MuiTypography-colorInherit-262 App-margin-137"
       >
         <span
-          className="MuiBadge-root-252 App-padding-130"
+          className="MuiBadge-root-268 App-padding-138"
         >
           Mines
           <span
-            className="MuiBadge-badge-253 MuiBadge-colorSecondary-255"
+            className="MuiBadge-badge-269 MuiBadge-colorSecondary-271"
           >
             10
           </span>
         </span>
       </h3>
       <h1
-        className="MuiTypography-root-228 MuiTypography-headline-233 MuiTypography-colorInherit-247 App-margin-129"
+        className="MuiTypography-root-243 MuiTypography-headline-248 MuiTypography-colorInherit-262 App-margin-137"
       >
         0:00
       </h1>
@@ -1627,10 +1614,10 @@ exports[`renders hard difficulty layout 1`] = `
   className="App"
 >
   <header
-    className="MuiPaper-root-139 MuiPaper-elevation4-145 MuiAppBar-root-131 MuiAppBar-positionFixed-132 MuiAppBar-colorPrimary-137 mui-fixed"
+    className="MuiPaper-root-147 MuiPaper-elevation4-153 MuiAppBar-root-139 MuiAppBar-positionFixed-140 MuiAppBar-colorPrimary-145 mui-fixed"
   >
     <div
-      className="MuiToolbar-root-166"
+      className="MuiToolbar-root-174 MuiToolbar-regular-176"
       style={
         Object {
           "margin": "auto",
@@ -1638,17 +1625,17 @@ exports[`renders hard difficulty layout 1`] = `
       }
     >
       <div
-        className="MuiInput-root-173 MuiInput-underline-177 App-margin-129"
+        className="MuiInput-root-183 MuiInput-underline-187 App-margin-137"
         color=""
       >
         <div
-          className="MuiSelect-root-168"
+          className="MuiSelect-root-178"
         >
           <div
             aria-haspopup="true"
             aria-owns={null}
             aria-pressed="false"
-            className="MuiSelect-select-169 MuiSelect-selectMenu-170 MuiInput-input-181"
+            className="MuiSelect-select-179 MuiSelect-selectMenu-180 MuiInput-input-191"
             onBlur={[Function]}
             onClick={[Function]}
             onFocus={[Function]}
@@ -1659,26 +1646,14 @@ exports[`renders hard difficulty layout 1`] = `
             Hard
           </div>
           <input
-            aria-invalid={undefined}
-            aria-required={undefined}
-            autoComplete={undefined}
-            autoFocus={undefined}
-            defaultValue={undefined}
             id="select-difficulty"
             name="difficulty"
-            onKeyDown={undefined}
-            onKeyUp={undefined}
-            placeholder={undefined}
-            readOnly={undefined}
-            required={undefined}
-            rows={undefined}
             type="hidden"
             value="hard"
           />
           <svg
             aria-hidden="true"
-            className="MuiSvgIcon-root-186 MuiSelect-icon-172"
-            color={undefined}
+            className="MuiSvgIcon-root-196 MuiSelect-icon-182"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -1690,7 +1665,7 @@ exports[`renders hard difficulty layout 1`] = `
       </div>
       <button
         aria-label="reset"
-        className="MuiButtonBase-root-218 MuiButton-root-196 MuiButton-contained-205 MuiButton-fab-213 MuiButton-raised-208"
+        className="MuiButtonBase-root-233 MuiButton-root-207 MuiButton-fab-224 MuiButton-contained-218 MuiButton-raised-221"
         disabled={false}
         onBlur={[Function]}
         onClick={[Function]}
@@ -1707,12 +1682,11 @@ exports[`renders hard difficulty layout 1`] = `
         type="button"
       >
         <span
-          className="MuiButton-label-197"
+          className="MuiButton-label-208"
         >
           <svg
             aria-hidden="true"
-            className="MuiSvgIcon-root-186"
-            color={undefined}
+            className="MuiSvgIcon-root-196"
             focusable="false"
             style={
               Object {
@@ -1765,25 +1739,25 @@ exports[`renders hard difficulty layout 1`] = `
           </svg>
         </span>
         <span
-          className="MuiTouchRipple-root-221"
+          className="MuiTouchRipple-root-236"
         />
       </button>
       <h3
-        className="MuiTypography-root-228 MuiTypography-subheading-235 MuiTypography-colorInherit-247 App-margin-129"
+        className="MuiTypography-root-243 MuiTypography-subheading-250 MuiTypography-colorInherit-262 App-margin-137"
       >
         <span
-          className="MuiBadge-root-252 App-padding-130"
+          className="MuiBadge-root-268 App-padding-138"
         >
           Mines
           <span
-            className="MuiBadge-badge-253 MuiBadge-colorSecondary-255"
+            className="MuiBadge-badge-269 MuiBadge-colorSecondary-271"
           >
             10
           </span>
         </span>
       </h3>
       <h1
-        className="MuiTypography-root-228 MuiTypography-headline-233 MuiTypography-colorInherit-247 App-margin-129"
+        className="MuiTypography-root-243 MuiTypography-headline-248 MuiTypography-colorInherit-262 App-margin-137"
       >
         0:00
       </h1>
@@ -11889,10 +11863,10 @@ exports[`renders medium difficulty layout 1`] = `
   className="App"
 >
   <header
-    className="MuiPaper-root-139 MuiPaper-elevation4-145 MuiAppBar-root-131 MuiAppBar-positionFixed-132 MuiAppBar-colorPrimary-137 mui-fixed"
+    className="MuiPaper-root-147 MuiPaper-elevation4-153 MuiAppBar-root-139 MuiAppBar-positionFixed-140 MuiAppBar-colorPrimary-145 mui-fixed"
   >
     <div
-      className="MuiToolbar-root-166"
+      className="MuiToolbar-root-174 MuiToolbar-regular-176"
       style={
         Object {
           "margin": "auto",
@@ -11900,17 +11874,17 @@ exports[`renders medium difficulty layout 1`] = `
       }
     >
       <div
-        className="MuiInput-root-173 MuiInput-underline-177 App-margin-129"
+        className="MuiInput-root-183 MuiInput-underline-187 App-margin-137"
         color=""
       >
         <div
-          className="MuiSelect-root-168"
+          className="MuiSelect-root-178"
         >
           <div
             aria-haspopup="true"
             aria-owns={null}
             aria-pressed="false"
-            className="MuiSelect-select-169 MuiSelect-selectMenu-170 MuiInput-input-181"
+            className="MuiSelect-select-179 MuiSelect-selectMenu-180 MuiInput-input-191"
             onBlur={[Function]}
             onClick={[Function]}
             onFocus={[Function]}
@@ -11921,26 +11895,14 @@ exports[`renders medium difficulty layout 1`] = `
             Medium
           </div>
           <input
-            aria-invalid={undefined}
-            aria-required={undefined}
-            autoComplete={undefined}
-            autoFocus={undefined}
-            defaultValue={undefined}
             id="select-difficulty"
             name="difficulty"
-            onKeyDown={undefined}
-            onKeyUp={undefined}
-            placeholder={undefined}
-            readOnly={undefined}
-            required={undefined}
-            rows={undefined}
             type="hidden"
             value="medium"
           />
           <svg
             aria-hidden="true"
-            className="MuiSvgIcon-root-186 MuiSelect-icon-172"
-            color={undefined}
+            className="MuiSvgIcon-root-196 MuiSelect-icon-182"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -11952,7 +11914,7 @@ exports[`renders medium difficulty layout 1`] = `
       </div>
       <button
         aria-label="reset"
-        className="MuiButtonBase-root-218 MuiButton-root-196 MuiButton-contained-205 MuiButton-fab-213 MuiButton-raised-208"
+        className="MuiButtonBase-root-233 MuiButton-root-207 MuiButton-fab-224 MuiButton-contained-218 MuiButton-raised-221"
         disabled={false}
         onBlur={[Function]}
         onClick={[Function]}
@@ -11969,12 +11931,11 @@ exports[`renders medium difficulty layout 1`] = `
         type="button"
       >
         <span
-          className="MuiButton-label-197"
+          className="MuiButton-label-208"
         >
           <svg
             aria-hidden="true"
-            className="MuiSvgIcon-root-186"
-            color={undefined}
+            className="MuiSvgIcon-root-196"
             focusable="false"
             style={
               Object {
@@ -12027,25 +11988,25 @@ exports[`renders medium difficulty layout 1`] = `
           </svg>
         </span>
         <span
-          className="MuiTouchRipple-root-221"
+          className="MuiTouchRipple-root-236"
         />
       </button>
       <h3
-        className="MuiTypography-root-228 MuiTypography-subheading-235 MuiTypography-colorInherit-247 App-margin-129"
+        className="MuiTypography-root-243 MuiTypography-subheading-250 MuiTypography-colorInherit-262 App-margin-137"
       >
         <span
-          className="MuiBadge-root-252 App-padding-130"
+          className="MuiBadge-root-268 App-padding-138"
         >
           Mines
           <span
-            className="MuiBadge-badge-253 MuiBadge-colorSecondary-255"
+            className="MuiBadge-badge-269 MuiBadge-colorSecondary-271"
           >
             10
           </span>
         </span>
       </h3>
       <h1
-        className="MuiTypography-root-228 MuiTypography-headline-233 MuiTypography-colorInherit-247 App-margin-129"
+        className="MuiTypography-root-243 MuiTypography-headline-248 MuiTypography-colorInherit-262 App-margin-137"
       >
         0:00
       </h1>
@@ -17831,10 +17792,10 @@ exports[`renders without crashing (ReactRenderer) 1`] = `
   className="App"
 >
   <header
-    className="MuiPaper-root-139 MuiPaper-elevation4-145 MuiAppBar-root-131 MuiAppBar-positionFixed-132 MuiAppBar-colorPrimary-137 mui-fixed"
+    className="MuiPaper-root-147 MuiPaper-elevation4-153 MuiAppBar-root-139 MuiAppBar-positionFixed-140 MuiAppBar-colorPrimary-145 mui-fixed"
   >
     <div
-      className="MuiToolbar-root-166"
+      className="MuiToolbar-root-174 MuiToolbar-regular-176"
       style={
         Object {
           "margin": "auto",
@@ -17842,17 +17803,17 @@ exports[`renders without crashing (ReactRenderer) 1`] = `
       }
     >
       <div
-        className="MuiInput-root-173 MuiInput-underline-177 App-margin-129"
+        className="MuiInput-root-183 MuiInput-underline-187 App-margin-137"
         color=""
       >
         <div
-          className="MuiSelect-root-168"
+          className="MuiSelect-root-178"
         >
           <div
             aria-haspopup="true"
             aria-owns={null}
             aria-pressed="false"
-            className="MuiSelect-select-169 MuiSelect-selectMenu-170 MuiInput-input-181"
+            className="MuiSelect-select-179 MuiSelect-selectMenu-180 MuiInput-input-191"
             onBlur={[Function]}
             onClick={[Function]}
             onFocus={[Function]}
@@ -17863,26 +17824,14 @@ exports[`renders without crashing (ReactRenderer) 1`] = `
             Easy
           </div>
           <input
-            aria-invalid={undefined}
-            aria-required={undefined}
-            autoComplete={undefined}
-            autoFocus={undefined}
-            defaultValue={undefined}
             id="select-difficulty"
             name="difficulty"
-            onKeyDown={undefined}
-            onKeyUp={undefined}
-            placeholder={undefined}
-            readOnly={undefined}
-            required={undefined}
-            rows={undefined}
             type="hidden"
             value="easy"
           />
           <svg
             aria-hidden="true"
-            className="MuiSvgIcon-root-186 MuiSelect-icon-172"
-            color={undefined}
+            className="MuiSvgIcon-root-196 MuiSelect-icon-182"
             focusable="false"
             viewBox="0 0 24 24"
           >
@@ -17894,7 +17843,7 @@ exports[`renders without crashing (ReactRenderer) 1`] = `
       </div>
       <button
         aria-label="reset"
-        className="MuiButtonBase-root-218 MuiButton-root-196 MuiButton-contained-205 MuiButton-fab-213 MuiButton-raised-208"
+        className="MuiButtonBase-root-233 MuiButton-root-207 MuiButton-fab-224 MuiButton-contained-218 MuiButton-raised-221"
         disabled={false}
         onBlur={[Function]}
         onClick={[Function]}
@@ -17911,12 +17860,11 @@ exports[`renders without crashing (ReactRenderer) 1`] = `
         type="button"
       >
         <span
-          className="MuiButton-label-197"
+          className="MuiButton-label-208"
         >
           <svg
             aria-hidden="true"
-            className="MuiSvgIcon-root-186"
-            color={undefined}
+            className="MuiSvgIcon-root-196"
             focusable="false"
             style={
               Object {
@@ -17969,25 +17917,25 @@ exports[`renders without crashing (ReactRenderer) 1`] = `
           </svg>
         </span>
         <span
-          className="MuiTouchRipple-root-221"
+          className="MuiTouchRipple-root-236"
         />
       </button>
       <h3
-        className="MuiTypography-root-228 MuiTypography-subheading-235 MuiTypography-colorInherit-247 App-margin-129"
+        className="MuiTypography-root-243 MuiTypography-subheading-250 MuiTypography-colorInherit-262 App-margin-137"
       >
         <span
-          className="MuiBadge-root-252 App-padding-130"
+          className="MuiBadge-root-268 App-padding-138"
         >
           Mines
           <span
-            className="MuiBadge-badge-253 MuiBadge-colorSecondary-255"
+            className="MuiBadge-badge-269 MuiBadge-colorSecondary-271"
           >
             10
           </span>
         </span>
       </h3>
       <h1
-        className="MuiTypography-root-228 MuiTypography-headline-233 MuiTypography-colorInherit-247 App-margin-129"
+        className="MuiTypography-root-243 MuiTypography-headline-248 MuiTypography-colorInherit-262 App-margin-137"
       >
         0:00
       </h1>
